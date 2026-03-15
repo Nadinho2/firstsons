@@ -14,17 +14,17 @@ export const SiteFooter: React.FC = () => {
             Built for complete beginners who want to ship.
           </p>
         </div>
-        <div className="flex flex-wrap gap-4 text-[11px] text-slate-400">
-          <a href="/academy" className="transition hover:text-slate-200">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-400">
+          <a href="/academy" className="inline-block py-2 transition hover:text-slate-200">
             Academy
           </a>
-          <a href="/community" className="transition hover:text-slate-200">
+          <a href="/community" className="inline-block py-2 transition hover:text-slate-200">
             Community
           </a>
-          <a href="/roadmap" className="transition hover:text-slate-200">
+          <a href="/roadmap" className="inline-block py-2 transition hover:text-slate-200">
             Roadmap
           </a>
-          <a href="/#waitlist" className="transition hover:text-slate-200">
+          <a href="/#waitlist" className="inline-block py-2 transition hover:text-slate-200">
             Contact
           </a>
         </div>

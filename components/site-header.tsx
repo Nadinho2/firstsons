@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // Badges suspended – re-add { label: "Badges", href: "/badges" } when ready
 const navItems = [
@@ -9,6 +13,23 @@ const navItems = [
 ] as const;
 
 export const SiteHeader: React.FC = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Close on route change (e.g. after clicking a link)
+  const closeMenu = () => setMobileMenuOpen(false);
+
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-slate-700/40 bg-[#020617]/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6 lg:px-8">
@@ -17,6 +38,7 @@ export const SiteHeader: React.FC = () => {
           href="/"
           className="flex items-center gap-2"
           aria-label="First Sons home"
+          onClick={closeMenu}
         >
           <div className="flex h-8 w-8 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1E40AF] via-[#2563EB] to-[#3B82F6] text-sm font-bold text-white shadow-[0_0_24px_rgba(37,99,235,0.8)]">
             F
@@ -26,7 +48,7 @@ export const SiteHeader: React.FC = () => {
           </span>
         </Link>
 
-        {/* Nav */}
+        {/* Desktop Nav */}
         <nav className="hidden items-center gap-8 text-xs font-medium text-slate-300/80 md:flex">
           {navItems.map((item) => (
             <Link
@@ -40,7 +62,7 @@ export const SiteHeader: React.FC = () => {
           ))}
         </nav>
 
-        {/* Right actions */}
+        {/* Right: Desktop CTA + Mobile hamburger */}
         <div className="flex items-center gap-3">
           <div className="hidden items-center gap-1 rounded-full border border-emerald-400/30 bg-emerald-500/5 px-3 py-1 text-[11px] font-medium text-emerald-200/90 md:flex">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.9)]" />
@@ -52,9 +74,57 @@ export const SiteHeader: React.FC = () => {
           >
             Join Waitlist
           </Link>
+
+          {/* Hamburger button - mobile only */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((o) => !o)}
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-600/50 bg-slate-800/50 text-slate-300 transition hover:bg-slate-700/50 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#020617] md:hidden"
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5" aria-hidden />
+            ) : (
+              <Menu className="h-5 w-5" aria-hidden />
+            )}
+          </button>
         </div>
+      </div>
+
+      {/* Mobile menu panel */}
+      <div
+        className={cn(
+          "absolute inset-x-0 top-full overflow-hidden border-t border-slate-700/40 bg-[#020617]/95 backdrop-blur-xl transition-all duration-300 ease-out md:hidden",
+          mobileMenuOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
+        )}
+      >
+        <nav className="mx-auto max-w-6xl flex flex-col px-4 py-4 md:px-6">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={closeMenu}
+              className="rounded-lg px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-slate-800/60 hover:text-white"
+            >
+              {item.label}
+            </Link>
+          ))}
+          <div className="mt-2 flex flex-col gap-2 border-t border-slate-700/50 pt-4">
+            <div className="flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/5 px-4 py-2 text-[11px] font-medium text-emerald-200/90">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span>Phase 1 Beta Live</span>
+            </div>
+            <Link
+              href="/#waitlist"
+              onClick={closeMenu}
+              className="flex items-center justify-center rounded-full bg-gradient-to-r from-[#1E40AF] via-[#2563EB] to-[#3B82F6] px-5 py-3 text-sm font-semibold text-white shadow-[0_0_30px_rgba(37,99,235,0.65)] transition hover:opacity-95"
+            >
+              Join Waitlist
+            </Link>
+          </div>
+        </nav>
       </div>
     </header>
   );
 };
-
