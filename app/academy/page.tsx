@@ -114,7 +114,7 @@ const journeySteps: JourneyStep[] = [
   {
     title: "Build Portfolio & Get Feedback",
     description:
-      "Collect on-chain proof and GitHub links for everything you ship, with live feedback from other First Sons."
+      "Collect GitHub links and proof for everything you ship, with live feedback from other First Sons."
   },
   {
     title: "Graduate Phase 1",
@@ -133,12 +133,7 @@ export default function AcademyPage() {
   return (
     <main className="bg-[#0F172A] text-white">
       {/* Hero */}
-      <section className="relative overflow-hidden px-4 pb-16 pt-24 sm:pt-28 md:px-6 md:pb-20 lg:px-8 lg:pt-32">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(96,165,250,0.24),transparent_60%),radial-gradient(circle_at_bottom,_rgba(30,64,175,0.45),transparent_60%)]"
-        />
-
+      <section className="hero-orbs relative overflow-hidden px-4 pb-16 pt-24 sm:pt-28 md:px-6 md:pb-20 md:pt-32 lg:px-8 lg:pt-36">
         <div className="mx-auto flex max-w-5xl flex-col gap-10 md:gap-12">
           <div className="space-y-5 text-center md:text-left">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[11px] font-medium text-slate-200 backdrop-blur-xl">
@@ -148,7 +143,7 @@ export default function AcademyPage() {
               </span>
             </div>
 
-            <h1 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-3xl font-semibold tracking-tight text-transparent sm:text-4xl md:text-5xl">
+            <h1 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-4xl font-semibold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
               The First Sons Academy
             </h1>
 
@@ -159,27 +154,10 @@ export default function AcademyPage() {
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
-              <Link
-                href="/#waitlist"
-                className={cn(
-                  "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold",
-                  "bg-gradient-to-r from-[#1E40AF] to-[#3B82F6] text-white shadow-[0_0_30px_rgba(37,99,235,0.65)]",
-                  "transition-all duration-300 hover:shadow-[0_0_45px_rgba(96,165,250,0.85)] focus-visible:outline-none",
-                  "focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-                )}
-              >
+              <Link href="/#waitlist" className="btn-glow">
                 Join Waitlist
               </Link>
-
-              <Link
-                href="/join-discord"
-                className={cn(
-                  "inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold",
-                  "bg-white/5 text-slate-100 backdrop-blur-xl transition-all duration-300",
-                  "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:text-white focus-visible:outline-none",
-                  "focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-                )}
-              >
+              <Link href="/join-discord" className="btn-outline inline-flex gap-2">
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 <span>Enter Discord</span>
               </Link>
@@ -233,16 +211,12 @@ export default function AcademyPage() {
                 step: "04",
                 title: "Ship & get feedback",
                 description:
-                  "Deploy, share links, and collect on-chain or GitHub proof for every project you ship."
+                  "Deploy, share links, and collect GitHub proof and feedback for every project you ship."
               }
             ].map((item) => (
               <article
                 key={item.step}
-                className={cn(
-                  "flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4 text-left",
-                  "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-                  "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-                )}
+                className="glass-card flex flex-col gap-2 p-4 text-left md:p-5"
               >
                 <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#60A5FA]">
                   {item.step}
@@ -258,13 +232,7 @@ export default function AcademyPage() {
           </div>
 
           {/* Prompt example */}
-          <div
-            className={cn(
-              "mt-4 rounded-2xl border border-white/10 bg-white/5 p-5",
-              "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-              "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-            )}
-          >
+          <div className="glass-card mt-4 p-5 md:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">
               Example Vibe Coding prompt
             </p>
@@ -311,15 +279,11 @@ export default function AcademyPage() {
             </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
             {courseCards.map((course) => (
               <article
                 key={course.title}
-                className={cn(
-                  "flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-5",
-                  "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-                  "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-                )}
+                className="glass-card flex h-full flex-col p-5 md:p-6"
               >
                 <div className="mb-3 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
@@ -423,15 +387,7 @@ export default function AcademyPage() {
           </p>
 
           <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-center">
-            <Link
-              href="/#waitlist"
-              className={cn(
-                "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold",
-                "bg-gradient-to-r from-[#1E40AF] to-[#3B82F6] text-white shadow-[0_0_30px_rgba(37,99,235,0.65)]",
-                "transition-all duration-300 hover:shadow-[0_0_45px_rgba(96,165,250,0.85)] focus-visible:outline-none",
-                "focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-              )}
-            >
+            <Link href="/#waitlist" className="btn-glow inline-flex gap-2">
               <span>Join the Phase 1 Waitlist</span>
               <ArrowRightCircle className="h-4 w-4" aria-hidden="true" />
             </Link>

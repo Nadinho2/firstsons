@@ -31,7 +31,7 @@ const momentumItems: MomentumItem[] = [
   {
     title: "Community Launch & Collabs",
     description:
-      "Discord fam live with multiple NFT/Web3 partnerships, raffles, and consistent jungle energy.",
+      "Discord fam live with multiple Web3 partnerships, raffles, and consistent jungle energy.",
     status: "Done",
     icon: <Users className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />
   },
@@ -78,7 +78,7 @@ const phases: Phase[] = [
     icon: <Sparkles className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
     bullets: [
       "Discord community opened with core channels and roles.",
-      "Initial collabs and raffles with NFT/Web3 partners.",
+      "Initial collabs and raffles with Web3 partners.",
       "Branding, stylized F logo, and website v1 shipped."
     ]
   },
@@ -102,7 +102,7 @@ const phases: Phase[] = [
     status: "Upcoming",
     icon: <Lock className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
     bullets: [
-      "Advanced specializations: DeFi agents, NFT tooling, DAO operations, and more.",
+      "Advanced specializations: DeFi agents, DAO operations, and more.",
       "Custom AI tools and Discord bots built specifically for First Sons members.",
       "Portfolio builder and earning pathways through bounties, gigs, and project collabs.",
       "Expanded events calendar with spaces, hackathons, and co-working sessions."
@@ -134,11 +134,7 @@ export default function RoadmapPage() {
   return (
     <main className="bg-[#0F172A] text-white">
       {/* Hero */}
-      <section className="relative overflow-hidden px-4 pb-16 pt-24 sm:pt-28 md:px-6 md:pb-20 lg:px-8 lg:pt-32">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(96,165,250,0.25),transparent_60%),radial-gradient(circle_at_bottom,_rgba(30,64,175,0.45),transparent_60%)]"
-        />
+      <section className="hero-orbs relative overflow-hidden px-4 pb-16 pt-24 sm:pt-28 md:px-6 md:pb-20 md:pt-32 lg:px-8 lg:pt-36">
         <div className="mx-auto max-w-5xl space-y-8 text-center md:text-left">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[11px] font-medium text-slate-200 backdrop-blur-xl">
             <CalendarDays className="h-4 w-4 text-[#60A5FA]" aria-hidden="true" />
@@ -146,7 +142,7 @@ export default function RoadmapPage() {
           </div>
 
           <div className="space-y-4">
-            <h1 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-3xl font-semibold tracking-tight text-transparent sm:text-4xl md:text-5xl">
+            <h1 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-4xl font-semibold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
               First Sons Roadmap
             </h1>
             <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base md:mx-0">
@@ -161,12 +157,7 @@ export default function RoadmapPage() {
               href={DISCORD_INVITE_URL}
               target="_blank"
               rel="noreferrer"
-              className={cn(
-                "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold",
-                "bg-gradient-to-r from-[#1E40AF] to-[#3B82F6] text-white shadow-[0_0_30px_rgba(37,99,235,0.7)]",
-                "transition-all duration-300 hover:shadow-[0_0_45px_rgba(96,165,250,0.9)] focus-visible:outline-none",
-                "focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-              )}
+              className="btn-glow inline-flex gap-2"
               aria-label="Join the First Sons Discord"
             >
               <Users className="h-4 w-4" aria-hidden="true" />
@@ -176,12 +167,7 @@ export default function RoadmapPage() {
               href={X_URL}
               target="_blank"
               rel="noreferrer"
-              className={cn(
-                "inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold",
-                "bg-white/5 text-slate-100 backdrop-blur-xl transition-all duration-300",
-                "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:text-white focus-visible:outline-none",
-                "focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-              )}
+              className="btn-outline inline-flex gap-2"
               aria-label="Follow First Sons on X"
             >
               <Globe2 className="h-4 w-4" aria-hidden="true" />
@@ -211,15 +197,11 @@ export default function RoadmapPage() {
             </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-4">
             {momentumItems.map((item) => (
               <article
                 key={item.title}
-                className={cn(
-                  "flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-5",
-                  "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-                  "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-                )}
+                className="glass-card flex h-full flex-col gap-3 p-5 md:p-6"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
@@ -263,15 +245,11 @@ export default function RoadmapPage() {
             </p>
           </div>
 
-          <div className="space-y-5 md:space-y-6">
+          <div className="space-y-4 sm:space-y-5 md:space-y-6">
             {phases.map((phase) => (
               <article
                 key={phase.label}
-                className={cn(
-                  "relative flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 md:flex-row md:items-start md:p-6",
-                  "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-                  "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-                )}
+                className="glass-card relative flex flex-col gap-4 p-5 md:flex-row md:items-start md:p-6"
               >
                 <div className="pointer-events-none absolute left-4 top-0 hidden h-px w-16 bg-gradient-to-r from-[#1E40AF] to-transparent md:block" />
 
@@ -338,43 +316,23 @@ export default function RoadmapPage() {
               href={DISCORD_INVITE_URL}
               target="_blank"
               rel="noreferrer"
-              className={cn(
-                "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold",
-                "bg-gradient-to-r from-[#1E40AF] to-[#3B82F6] text-white shadow-[0_0_30px_rgba(37,99,235,0.7)]",
-                "transition-all duration-300 hover:shadow-[0_0_45px_rgba(96,165,250,0.9)] focus-visible:outline-none",
-                "focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-              )}
+              className="btn-glow inline-flex gap-2"
               aria-label="Join the First Sons Discord fam"
             >
               <Users className="h-4 w-4" aria-hidden="true" />
               <span>Join Discord Fam</span>
             </Link>
-
             <Link
               href={X_URL}
               target="_blank"
               rel="noreferrer"
-              className={cn(
-                "inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold",
-                "bg-white/5 text-slate-100 backdrop-blur-xl transition-all duration-300",
-                "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:text-white focus-visible:outline-none",
-                "focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-              )}
+              className="btn-outline inline-flex gap-2"
               aria-label="Follow First Sons on X"
             >
               <Globe2 className="h-4 w-4" aria-hidden="true" />
               <span>Follow on X @Firstsons_Dao</span>
             </Link>
-
-            <Link
-              href="/#waitlist"
-              className={cn(
-                "inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold",
-                "bg-white/0 text-slate-100 backdrop-blur-xl transition-all duration-300",
-                "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:text-white focus-visible:outline-none",
-                "focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-              )}
-            >
+            <Link href="/#waitlist" className="btn-outline inline-flex gap-2">
               <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
               <span>Join Academy Waitlist</span>
             </Link>

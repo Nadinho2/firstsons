@@ -30,13 +30,11 @@ export default function WaitlistSuccessPage() {
           </div>
 
           <h1 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-3xl font-semibold tracking-tight text-transparent sm:text-4xl md:text-5xl">
-            Welcome to the First Sons queue.
+            You&apos;re in! Check Discord →
           </h1>
 
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
-            You&apos;re officially locked in for the next Phase 1 cohort. While
-            we line up spots and schedules, plug into the Discord jungle and
-            follow us on X so you don&apos;t miss any early drops.
+            You&apos;re officially on the list for the next Phase 1 cohort. Plug into the Discord jungle and follow us on X so you don&apos;t miss early drops and build-alongs.
           </p>
         </section>
 

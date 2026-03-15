@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { redirect } from "next/navigation";
 import { sendWaitlistConfirmationEmail } from "@/lib/email";
+import { WaitlistForm } from "@/components/WaitlistForm";
 
 export const metadata: Metadata = {
   title: "First Sons — Web3 Academy for Complete Beginners",
@@ -96,9 +97,9 @@ const featureHighlights = [
       "Daily vibe rooms, build-alongs, and live support so you never get stuck alone in the terminal.",
   },
   {
-    title: "On-Chain Proof",
+    title: "Ship Real Projects",
     description:
-      "Earn on-chain badges for every milestone you ship. Your work lives on-chain, not in a PDF.",
+      "Your work lives in code and in the jungle — real builds, real feedback, real proof you showed up.",
   },
   {
     title: "Skin-in-the-Game Beta",
@@ -107,55 +108,16 @@ const featureHighlights = [
   },
 ];
 
-type GradientButtonProps = {
-  children: React.ReactNode;
-  className?: string;
-  type?: "button" | "submit" | "reset";
-};
-
-function GradientButton({
-  children,
-  className = "",
-  type = "button"
-}: GradientButtonProps) {
-  return (
-    <button
-      type={type}
-      className={`relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#1E40AF] via-[#2563EB] to-[#3B82F6] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_30px_rgba(37,99,235,0.65)] transition duration-300 hover:shadow-[0_0_45px_rgba(96,165,250,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A] ${className}`}
-    >
-      <span className="relative z-10">{children}</span>
-      <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-white/10 via-transparent to-white/5 opacity-0 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100" />
-    </button>
-  );
-}
-
-function OutlineButton({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <button
-      className={`inline-flex items-center justify-center rounded-full border border-blue-400/40 bg-white/0 px-6 py-3 text-sm font-semibold text-blue-200/90 backdrop-blur-md transition duration-300 hover:border-blue-300/80 hover:bg-blue-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A] ${className}`}
-    >
-      {children}
-    </button>
-  );
-}
-
 const Hero: React.FC = () => {
   return (
-    <section className="relative overflow-hidden bg-[#020617] pb-16 pt-28 text-white sm:pt-32 md:pb-24 lg:pt-36">
-      {/* Background glow + shapes */}
+    <section className="hero-orbs relative overflow-hidden bg-[#020617] pb-16 pt-24 text-white sm:pt-28 sm:pb-20 md:pb-24 md:pt-32 lg:pt-36">
+      {/* Extra orbs for depth */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10"
       >
-        <div className="absolute -left-32 top-10 h-72 w-72 rounded-full bg-[#1E40AF] blur-3xl opacity-40" />
-        <div className="absolute right-[-80px] top-32 h-80 w-80 rounded-full bg-[#3B82F6] blur-3xl opacity-40" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.15),_transparent_55%),radial-gradient(circle_at_bottom,_rgba(37,99,235,0.35),_transparent_55%)]" />
+        <div className="absolute -left-32 top-10 h-72 w-72 rounded-full bg-[#1E40AF] blur-3xl opacity-30" />
+        <div className="absolute right-[-80px] top-32 h-80 w-80 rounded-full bg-[#3B82F6] blur-3xl opacity-30" />
       </div>
 
       <div className="mx-auto flex max-w-6xl flex-col gap-16 px-4 md:px-6 lg:flex-row lg:items-center lg:gap-20 lg:px-8">
@@ -165,9 +127,9 @@ const Hero: React.FC = () => {
             <span className="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_16px_rgba(59,130,246,0.9)]" />
             <span>Web3 Academy for Complete Beginners</span>
           </div>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-50 sm:text-4xl md:text-5xl md:leading-tight">
+          <h1 className="text-4xl font-semibold tracking-tight text-slate-50 sm:text-5xl md:text-6xl md:leading-tight lg:text-7xl">
             Your First Step Into{" "}
-            <span className="bg-gradient-to-r from-[#60A5FA] via-[#BFDBFE] to-white bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">
               Web3
             </span>{" "}
             Starts Here.
@@ -177,18 +139,11 @@ const Hero: React.FC = () => {
             skills like AI Automation and Community Management by shipping
             actual projects with AI — no jargon, no overwhelm.
           </p>
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              href="/#waitlist"
-              className="relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#1E40AF] via-[#2563EB] to-[#3B82F6] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_30px_rgba(37,99,235,0.65)] transition duration-300 hover:shadow-[0_0_45px_rgba(96,165,250,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-            >
-              <span className="relative z-10">Join Waitlist</span>
-              <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-white/10 via-transparent to-white/5 opacity-0 mix-blend-overlay transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+            <Link href="/#waitlist" className="btn-glow">
+              Join Waitlist
             </Link>
-            <Link
-              href="/academy"
-              className="inline-flex items-center justify-center rounded-full border border-blue-400/40 bg-white/0 px-6 py-3 text-sm font-semibold text-blue-200/90 backdrop-blur-md transition duration-300 hover:border-blue-300/80 hover:bg-blue-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-            >
+            <Link href="/academy" className="btn-outline">
               See Curriculum
             </Link>
           </div>
@@ -248,12 +203,12 @@ const Hero: React.FC = () => {
                     Proof of Work
                   </p>
                   <p className="text-xs text-slate-300">
-                    On-chain badges for every shipped project.
+                    Ship real projects and build your portfolio with the fam.
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="h-8 w-8 rounded-full bg-gradient-to-tr from-[#1E40AF] to-[#60A5FA] opacity-70 blur-sm" />
-                  <span className="h-10 w-10 rounded-full bg-gradient-to-tr from-[#38BDF8] to-[#A855F7] opacity-70 blur-md" />
+                  <span className="h-8 w-8 rounded-full bg-gradient-to-r from-[#1E40AF] to-[#3B82F6] opacity-70 blur-sm" />
+                  <span className="h-10 w-10 rounded-full bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] opacity-70 blur-md" />
                 </div>
               </div>
             </div>
@@ -285,11 +240,11 @@ const CoursesSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
           {courses.map((course) => (
             <article
               key={course.title}
-              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/40 p-5 shadow-[0_0_0_rgba(15,23,42,0.6)] backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:border-blue-400/60 hover:shadow-[0_0_45px_rgba(37,99,235,0.7)]"
+              className="glass-card-strong group relative flex h-full flex-col overflow-hidden p-5 md:p-6"
             >
               <div className="pointer-events-none absolute inset-px rounded-[1.05rem] bg-gradient-to-br from-white/4 via-transparent to-blue-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="relative flex-1 space-y-3">
@@ -317,14 +272,17 @@ const CoursesSection: React.FC = () => {
                   ))}
                 </div>
                 <div className="flex flex-col gap-2">
-                  <GradientButton className="w-full justify-center text-xs">
+                  <Link
+                    href="/#waitlist"
+                    className="btn-glow w-full justify-center py-2.5 text-xs"
+                  >
                     Enroll in Beta
-                  </GradientButton>
+                  </Link>
                   <Link
                     href={`/academy/${course.slug}`}
-                    className="inline-flex w-full items-center justify-center rounded-full border border-[#60A5FA]/50 px-3 py-2 text-[11px] font-medium text-slate-100 transition-all duration-300 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
+                    className="btn-outline w-full justify-center py-2.5 text-xs"
                   >
-                    View Curriculum <span className="ml-1">→</span>
+                    View Curriculum →
                   </Link>
                 </div>
               </div>
@@ -355,11 +313,11 @@ const WhySection: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
           {featureHighlights.map((feature) => (
             <article
               key={feature.title}
-              className="group relative overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/40 p-5 shadow-[0_0_0_rgba(15,23,42,0.7)] backdrop-blur-2xl transition duration-300 hover:-translate-y-1 hover:border-blue-400/70 hover:shadow-[0_0_40px_rgba(37,99,235,0.75)]"
+              className="glass-card-strong group relative overflow-hidden p-5 md:p-6"
             >
               <div className="pointer-events-none absolute inset-px rounded-[1.05rem] bg-gradient-to-br from-blue-500/10 via-transparent to-sky-400/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="relative space-y-2.5">
@@ -416,73 +374,61 @@ const WaitlistSection: React.FC = () => {
           Phase 1 Cohort
         </p>
         <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
-          Ready to verify your value on-chain?
+          Ready to join the fam?
         </h2>
         <p className="mt-3 text-xs leading-relaxed text-slate-300 sm:text-sm">
           Join the waitlist for the first cohort. Limited spots. You&apos;ll be
           the first to hear when Phase 1 goes live.
         </p>
 
-        <form className="mt-8 space-y-4" action={submitWaitlist}>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="flex flex-col gap-1.5 text-left text-xs sm:text-sm">
-              <label
-                htmlFor="fullName"
-                className="text-[11px] font-medium text-slate-200 sm:text-xs"
-              >
-                Full Name <span className="text-slate-400">(optional)</span>
+        <div className="mt-8">
+          <WaitlistForm action={submitWaitlist}>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="flex flex-col gap-1.5 text-left">
+                <label htmlFor="fullName" className="text-[11px] font-medium text-slate-200 sm:text-xs">
+                  Name <span className="text-slate-400">(optional)</span>
+                </label>
+                <input
+                  id="fullName"
+                  name="fullName"
+                  type="text"
+                  placeholder="Your name"
+                  className="w-full rounded-xl border border-slate-700/70 bg-slate-900/60 px-3.5 py-2.5 text-sm text-slate-50 outline-none placeholder:text-slate-500 focus:border-[#60A5FA]/80 focus:ring-2 focus:ring-[#60A5FA]/40"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5 text-left">
+                <label htmlFor="email" className="text-[11px] font-medium text-slate-200 sm:text-xs">
+                  Email <span className="text-rose-400/80">*</span>
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  className="w-full rounded-xl border border-slate-700/70 bg-slate-900/60 px-3.5 py-2.5 text-sm text-slate-50 outline-none placeholder:text-slate-500 focus:border-[#60A5FA]/80 focus:ring-2 focus:ring-[#60A5FA]/40"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-1.5 text-left">
+              <label htmlFor="discord" className="text-[11px] font-medium text-slate-200 sm:text-xs">
+                Discord Username <span className="text-rose-400/80">*</span>
               </label>
               <input
-                id="fullName"
-                name="fullName"
-                type="text"
-                placeholder="Satoshi Nakamoto"
-                className="w-full rounded-xl border border-slate-700/70 bg-slate-900/60 px-3.5 py-2.5 text-xs text-slate-50 outline-none placeholder:text-slate-500 focus:border-blue-400/80 focus:bg-slate-900/80 focus:ring-2 focus:ring-blue-500/60"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5 text-left text-xs sm:text-sm">
-              <label
-                htmlFor="email"
-                className="text-[11px] font-medium text-slate-200 sm:text-xs"
-              >
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                placeholder="you@firstsons.xyz"
-                className="w-full rounded-xl border border-slate-700/70 bg-slate-900/60 px-3.5 py-2.5 text-xs text-slate-50 outline-none placeholder:text-slate-500 focus:border-blue-400/80 focus:bg-slate-900/80 focus:ring-2 focus:ring-blue-500/60"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-1.5 text-left text-xs sm:text-sm">
-            <label
-              htmlFor="discord"
-              className="text-[11px] font-medium text-slate-200 sm:text-xs"
-            >
-              Discord Username
-            </label>
-            <input
-              id="discord"
+                id="discord"
                 name="discord"
-              type="text"
-              required
-              placeholder="@firstson"
-              className="w-full rounded-xl border border-slate-700/70 bg-slate-900/60 px-3.5 py-2.5 text-xs text-slate-50 outline-none placeholder:text-slate-500 focus:border-blue-400/80 focus:bg-slate-900/80 focus:ring-2 focus:ring-blue-500/60"
-            />
-          </div>
-          <div className="pt-2">
-            <GradientButton className="w-full justify-center text-sm" type="submit">
-              Join Waitlist
-            </GradientButton>
-          </div>
-          <p className="text-[11px] text-slate-500">
-            We&apos;ll only use your details to contact you about the First Sons
-            cohort. No spam, ever.
-          </p>
-        </form>
+                type="text"
+                required
+                placeholder="@yourhandle"
+                className="w-full rounded-xl border border-slate-700/70 bg-slate-900/60 px-3.5 py-2.5 text-sm text-slate-50 outline-none placeholder:text-slate-500 focus:border-[#60A5FA]/80 focus:ring-2 focus:ring-[#60A5FA]/40"
+              />
+            </div>
+            <p className="text-[11px] text-slate-500">
+              We&apos;ll only use your details to contact you about the First Sons
+              cohort. No spam, ever.
+            </p>
+          </WaitlistForm>
+        </div>
       </div>
     </section>
   );

@@ -141,11 +141,7 @@ export default function CommunityPage() {
   return (
     <main className="bg-[#0F172A] text-white">
       {/* Hero */}
-      <section className="relative overflow-hidden px-4 pb-16 pt-24 sm:pt-28 md:px-6 md:pb-20 lg:px-8 lg:pt-32">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(96,165,250,0.24),transparent_60%),radial-gradient(circle_at_bottom,_rgba(30,64,175,0.45),transparent_60%)]"
-        />
+      <section className="hero-orbs relative overflow-hidden px-4 pb-16 pt-24 sm:pt-28 md:px-6 md:pb-20 md:pt-32 lg:px-8 lg:pt-36">
         <div className="mx-auto max-w-5xl space-y-8 text-center md:text-left">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[11px] font-medium text-slate-200 backdrop-blur-xl">
             <Users className="h-4 w-4 text-[#60A5FA]" aria-hidden="true" />
@@ -155,7 +151,7 @@ export default function CommunityPage() {
           </div>
 
           <div className="space-y-4">
-            <h1 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-3xl font-semibold tracking-tight text-transparent sm:text-4xl md:text-5xl">
+            <h1 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-4xl font-semibold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
               The First Sons Community
             </h1>
             <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base md:mx-0">
@@ -170,28 +166,17 @@ export default function CommunityPage() {
               href={DISCORD_INVITE_URL}
               target="_blank"
               rel="noreferrer"
-              className={cn(
-                "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold",
-                "bg-gradient-to-r from-[#1E40AF] to-[#3B82F6] text-white shadow-[0_0_30px_rgba(37,99,235,0.7)]",
-                "transition-all duration-300 hover:shadow-[0_0_45px_rgba(96,165,250,0.9)] focus-visible:outline-none",
-                "focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-              )}
+              className="btn-glow inline-flex gap-2"
               aria-label="Join the First Sons Discord community"
             >
               <MessageCircle className="h-4 w-4" aria-hidden="true" />
               <span>Join the Discord Fam</span>
             </Link>
-
             <Link
               href={X_URL}
               target="_blank"
               rel="noreferrer"
-              className={cn(
-                "inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold",
-                "bg-white/5 text-slate-100 backdrop-blur-xl transition-all duration-300",
-                "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:text-white focus-visible:outline-none",
-                "focus-visible:ring-2 focus-visible:ring-[#60A5FA] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F172A]"
-              )}
+              className="btn-outline inline-flex gap-2"
               aria-label="Follow First Sons on X"
             >
               <Twitter className="h-4 w-4" aria-hidden="true" />
@@ -222,15 +207,11 @@ export default function CommunityPage() {
             </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-4">
             {whyCards.map((card) => (
               <article
                 key={card.title}
-                className={cn(
-                  "flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-5",
-                  "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-                  "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-                )}
+                className="glass-card flex h-full flex-col gap-3 p-5 md:p-6"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900/70">
@@ -265,19 +246,15 @@ export default function CommunityPage() {
             </h2>
             <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
               Every channel is designed to push you forward — from your first
-              hello to your first on-chain ship and beyond.
+              hello to your first ship and beyond.
             </p>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
             {channelCards.map((channel) => (
               <article
                 key={channel.name}
-                className={cn(
-                  "flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4",
-                  "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-                  "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-                )}
+                className="glass-card flex flex-col gap-2 p-4 md:p-5"
               >
                 <div className="flex items-center gap-2">
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-900/70">
@@ -317,15 +294,11 @@ export default function CommunityPage() {
             </h2>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
             {testimonials.map((item) => (
               <article
                 key={item.handle}
-                className={cn(
-                  "flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-5",
-                  "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-                  "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-                )}
+                className="glass-card flex h-full flex-col gap-3 p-5 md:p-6"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900/70">
