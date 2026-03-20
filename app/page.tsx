@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
-import { redirect } from "next/navigation";
-import { sendWaitlistConfirmationEmail } from "@/lib/email";
+import { submitWaitlist } from "@/app/actions/waitlist";
 import { WaitlistForm } from "@/components/WaitlistForm";
+
+/** Ensure waitlist server action runs on the server (not a stale static shell). */
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "First Sons — Web3 Academy for Complete Beginners",
@@ -337,32 +339,6 @@ const WhySection: React.FC = () => {
 };
 
 const WaitlistSection: React.FC = () => {
-  async function submitWaitlist(formData: FormData): Promise<void> {
-    "use server";
-
-    const emailValue = formData.get("email");
-    const fullNameValue = formData.get("fullName");
-    const discordValue = formData.get("discord");
-
-    const email = typeof emailValue === "string" ? emailValue.trim() : "";
-    const fullName =
-      typeof fullNameValue === "string" ? fullNameValue.trim() : "";
-    const discord =
-      typeof discordValue === "string" ? discordValue.trim() : "";
-
-    if (!email) {
-      redirect("/#waitlist");
-    }
-
-    await sendWaitlistConfirmationEmail({
-      email,
-      fullName: fullName || undefined,
-      discord: discord || undefined
-    });
-
-    redirect("/waitlist/success");
-  }
-
   return (
     <section
       id="waitlist"

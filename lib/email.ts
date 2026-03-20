@@ -6,6 +6,14 @@ export type WaitlistEmailPayload = {
   discord?: string;
 };
 
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 function getResendConfig(): { apiKey: string; fromAddress: string } | null {
   const apiKey = process.env.RESEND_API_KEY?.trim();
   const fromAddress = process.env.WAITLIST_FROM_EMAIL?.trim();
@@ -21,13 +29,15 @@ export async function sendWaitlistConfirmationEmail(
   const config = getResendConfig();
 
   if (!config) {
-    // This path still redirects to /waitlist/success — easy to miss in production
-    // if env vars exist in .env.local but were never added on the host (e.g. Vercel).
-    console.warn(
-      "[waitlist] Email NOT sent: RESEND_API_KEY or WAITLIST_FROM_EMAIL missing on the server.",
-      "Add both to .env.local (local) and to your host’s Environment Variables (production).",
-      { to: payload.email }
-    );
+    const hint =
+      "Set RESEND_API_KEY and WAITLIST_FROM_EMAIL for this environment (e.g. Vercel → Settings → Environment Variables → Redeploy).";
+    console.warn("[waitlist] Email NOT sent — missing env.", hint, {
+      to: payload.email
+    });
+    // In production, do not pretend the email went out (avoids “success” with no mail).
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(`Waitlist email not configured. ${hint}`);
+    }
     return;
   }
 
@@ -50,13 +60,19 @@ export async function sendWaitlistConfirmationEmail(
     "— First Sons"
   ].join("\n");
 
+  const html = `<div style="font-family:system-ui,sans-serif;line-height:1.5;color:#0f172a">${escapeHtml(
+    text
+  ).replace(/\n/g, "<br/>")}</div>`;
+
   const resend = new Resend(config.apiKey);
 
   const { data, error } = await resend.emails.send({
     from: config.fromAddress,
-    to: email,
+    to: [email],
     subject: "You’re on the First Sons waitlist",
-    text
+    text,
+    html,
+    tags: [{ name: "source", value: "waitlist" }]
   });
 
   if (error) {
