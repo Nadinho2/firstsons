@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Rocket, Sparkles, Twitter, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getWaitlistCourseBySlug } from "@/lib/waitlist-courses";
 
 export const metadata: Metadata = {
   title: "Waitlist Confirmed | First Sons",
@@ -12,7 +13,16 @@ export const metadata: Metadata = {
 const DISCORD_INVITE_URL = "https://discord.gg/VJj2ZHc46";
 const X_URL = "https://x.com/Firstsons_Dao";
 
-export default function WaitlistSuccessPage() {
+type Props = {
+  searchParams: Record<string, string | string[] | undefined>;
+};
+
+export default function WaitlistSuccessPage({ searchParams }: Props) {
+  const courseRaw = searchParams.course;
+  const courseSlug =
+    typeof courseRaw === "string" ? courseRaw : undefined;
+  const course = courseSlug ? getWaitlistCourseBySlug(courseSlug) : undefined;
+
   return (
     <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-[#0F172A] px-4 py-16 text-white md:px-6 lg:px-8">
       <div
@@ -32,6 +42,13 @@ export default function WaitlistSuccessPage() {
           <h1 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-3xl font-semibold tracking-tight text-transparent sm:text-4xl md:text-5xl">
             You&apos;re in! Check Discord →
           </h1>
+
+          {course ? (
+            <p className="mx-auto max-w-xl text-sm font-medium text-[#60A5FA] sm:text-base">
+              Track: {course.title}
+              {course.comingSoon ? " (coming soon)" : ""}
+            </p>
+          ) : null}
 
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
             You&apos;re on the list for the next Phase 1 cohort. Join Discord and
@@ -141,4 +158,3 @@ export default function WaitlistSuccessPage() {
     </main>
   );
 }
-

@@ -1,9 +1,17 @@
 import { Resend } from "resend";
+import {
+  getResendApiKey,
+  getResendFromAddress,
+  isValidResendFromFormat,
+} from "@/lib/resend-config";
 
 export type WaitlistEmailPayload = {
   email: string;
   fullName?: string;
   discord?: string;
+  /** Selected track (waitlist) */
+  courseSlug?: string;
+  courseTitle?: string;
 };
 
 function escapeHtml(s: string): string {
@@ -14,64 +22,22 @@ function escapeHtml(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
-/**
- * Vercel / copy-paste often adds wrapping quotes, smart quotes, or invisible chars.
- * Resend requires: `email@domain.com` or `Name <email@domain.com>` (ASCII `<` `>`).
- */
-function normalizeFromAddress(raw: string | undefined): string | undefined {
-  if (!raw) return undefined;
-  let s = raw.trim();
-  s = s.replace(/[\u200B-\u200D\uFEFF]/g, "");
-  s = s.replace(/[\u201C\u201D]/g, '"').replace(/[\u2018\u2019]/g, "'");
-  while (
-    s.length >= 2 &&
-    ((s.startsWith('"') && s.endsWith('"')) ||
-      (s.startsWith("'") && s.endsWith("'")))
-  ) {
-    s = s.slice(1, -1).trim();
-  }
-  return s || undefined;
-}
-
-function isValidResendFromFormat(s: string): boolean {
-  const t = s.trim();
-  if (!t) return false;
-  if (!t.includes("<")) {
-    return /^[^\s<>]+@[^\s<>]+$/.test(t);
-  }
-  const open = t.indexOf("<");
-  const close = t.lastIndexOf(">");
-  if (close <= open) return false;
-  const email = t.slice(open + 1, close).trim();
-  return /^[^\s<>]+@[^\s<>]+$/.test(email);
-}
-
-/** Resend “from” — same value, several names so Vercel matches Resend docs / copy-paste. */
-function getFromAddress(): string | undefined {
-  return (
-    normalizeFromAddress(process.env.WAITLIST_FROM_EMAIL) ||
-    normalizeFromAddress(process.env.RESEND_FROM) ||
-    normalizeFromAddress(process.env.RESEND_FROM_EMAIL) ||
-    undefined
-  );
-}
-
 /** For server-action logs (Vercel) — must match getFromAddress() logic. */
 export function waitlistEmailEnvStatus(): {
   hasResendKey: boolean;
   hasFrom: boolean;
 } {
   return {
-    hasResendKey: Boolean(process.env.RESEND_API_KEY?.trim()),
-    hasFrom: Boolean(getFromAddress())
+    hasResendKey: Boolean(getResendApiKey()),
+    hasFrom: Boolean(getResendFromAddress())
   };
 }
 
 export async function sendWaitlistConfirmationEmail(
   payload: WaitlistEmailPayload
 ): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY?.trim();
-  const fromAddress = getFromAddress();
+  const apiKey = getResendApiKey();
+  const fromAddress = getResendFromAddress();
   const config =
     apiKey && fromAddress ? { apiKey, fromAddress } : null;
 
@@ -92,12 +58,17 @@ export async function sendWaitlistConfirmationEmail(
     return;
   }
 
-  const { email, fullName, discord } = payload;
+  const { email, fullName, discord, courseTitle } = payload;
+
+  const trackLine = courseTitle
+    ? `Track: ${courseTitle}.`
+    : "We’ll route your cohort updates for the track you selected.";
 
   const text = [
     `Hey${fullName ? ` ${fullName}` : ""},`,
     "",
     "You’re on the First Sons Phase 1 waitlist.",
+    trackLine,
     "When spots open, we’ll email you how to join the cohort, start Vibe Coding, and ship your first on-chain projects with the group.",
     "",
     discord
@@ -123,13 +94,22 @@ export async function sendWaitlistConfirmationEmail(
 
   const resend = new Resend(config.apiKey);
 
+  const subject = courseTitle
+    ? `First Sons — ${courseTitle} waitlist`
+    : "First Sons — Phase 1 waitlist";
+
   const { data, error } = await resend.emails.send({
     from: config.fromAddress,
     to: [email],
-    subject: "Firstsons Academy",
+    subject,
     text,
     html,
-    tags: [{ name: "source", value: "waitlist" }]
+    tags: [
+      { name: "source", value: "waitlist" },
+      ...(payload.courseSlug
+        ? [{ name: "course", value: payload.courseSlug }]
+        : [])
+    ]
   });
 
   if (error) {

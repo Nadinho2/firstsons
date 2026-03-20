@@ -5,11 +5,11 @@ import {
   BrainCircuit,
   Sparkles,
   Users,
-  ShieldCheck,
-  BarChart3,
   ListChecks,
   MessageCircle,
-  ArrowRightCircle
+  ArrowRightCircle,
+  Megaphone,
+  TrendingUp
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -20,15 +20,18 @@ export const metadata: Metadata = {
 };
 
 type CourseCard = {
+  slug: string;
   title: string;
   weeks: string;
   levelTag: string;
+  comingSoon?: boolean;
   icon: React.ReactNode;
   bullets: string[];
 };
 
 const courseCards: CourseCard[] = [
   {
+    slug: "vibe-coding",
     title: "Vibe Coding",
     weeks: "6–8 weeks",
     levelTag: "Core",
@@ -41,9 +44,10 @@ const courseCards: CourseCard[] = [
     ]
   },
   {
-    title: "AI Automation in Web3",
+    slug: "ai-automation-web3",
+    title: "AI / Bot Automation",
     weeks: "5–7 weeks",
-    levelTag: "Core",
+    levelTag: "Advanced",
     icon: <BrainCircuit className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
     bullets: [
       "Build bots that watch wallets, prices, and on-chain events.",
@@ -53,9 +57,10 @@ const courseCards: CourseCard[] = [
     ]
   },
   {
-    title: "Community Management for Web3",
+    slug: "community-management-web3",
+    title: "Community Management",
     weeks: "4–6 weeks",
-    levelTag: "Essential",
+    levelTag: "Operations",
     icon: <Users className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
     bullets: [
       "Design Discord spaces that feel alive, not empty.",
@@ -65,27 +70,31 @@ const courseCards: CourseCard[] = [
     ]
   },
   {
-    title: "Wallet & Security Mastery",
-    weeks: "3–5 weeks",
-    levelTag: "Essential",
-    icon: <ShieldCheck className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
+    slug: "content-creation",
+    title: "Content Creation",
+    weeks: "TBA",
+    levelTag: "Growth",
+    comingSoon: true,
+    icon: <Megaphone className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
     bullets: [
-      "Set up hot, warm, and cold wallets the safe way.",
-      "Learn how common scams work so you can avoid them.",
-      "Use AI to build tiny tools that sanity-check transactions.",
-      "Create your personal security checklist and wallet setup."
+      "Threads, short-form video, and newsletters for Web3 brands.",
+      "AI-assisted workflows so you ship content weekly, not monthly.",
+      "Templates and prompts tuned for builders and communities.",
+      "Portfolio-ready pieces you can show to clients or teams."
     ]
   },
   {
-    title: "On-Chain Basics & Analytics",
-    weeks: "4–6 weeks",
-    levelTag: "Core",
-    icon: <BarChart3 className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
+    slug: "futures-trading",
+    title: "Futures Trading",
+    weeks: "TBA",
+    levelTag: "Markets",
+    comingSoon: true,
+    icon: <TrendingUp className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
     bullets: [
-      "Understand blocks, transactions, gas, and basic EVM flows.",
-      "Query chain data with APIs, Dune, and explorers.",
-      "Build dashboards for prices, wallets, and protocol stats.",
-      "Ship a simple on-chain analytics board you can show off."
+      "Risk, sizing, and execution for crypto futures.",
+      "Discipline-first drills so you don’t blow up the account.",
+      "Opens after core curriculum is locked—join the waitlist early.",
+      "For members who already ship with the academy."
     ]
   }
 ];
@@ -272,17 +281,20 @@ export default function AcademyPage() {
               Phase 1: Build your on-chain foundation.
             </h2>
             <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
-              Five tracks that cover what you need to ship in Web3—from your
-              first wallet to running bots and reading on-chain data without
-              drowning in charts.
+              Five tracks: Vibe Coding, AI / Bot Automation, and Community
+              Management are live in beta; Content Creation and Futures Trading
+              are queued—join the waitlist for the one you want first.
             </p>
           </div>
 
           <div className="grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
             {courseCards.map((course) => (
               <article
-                key={course.title}
-                className="glass-card flex h-full flex-col p-5 md:p-6"
+                key={course.slug}
+                className={cn(
+                  "glass-card flex h-full flex-col p-5 md:p-6",
+                  course.comingSoon && "border-amber-500/20"
+                )}
               >
                 <div className="mb-3 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
@@ -298,8 +310,15 @@ export default function AcademyPage() {
                       </p>
                     </div>
                   </div>
-                  <span className="rounded-full border border-white/15 bg-slate-900/60 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-200">
-                    {course.levelTag}
+                  <span
+                    className={cn(
+                      "rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em]",
+                      course.comingSoon
+                        ? "border-amber-500/40 bg-amber-500/10 text-amber-100"
+                        : "border-white/15 bg-slate-900/60 text-slate-200"
+                    )}
+                  >
+                    {course.comingSoon ? "Soon" : course.levelTag}
                   </span>
                 </div>
 
@@ -312,8 +331,19 @@ export default function AcademyPage() {
                   ))}
                 </ul>
 
-                <div className="mt-auto flex items-center justify-between pt-1 text-[11px] text-slate-300">
+                <div className="mt-auto flex flex-col gap-2 pt-1 text-[11px] text-slate-300">
                   <span>Built with Vibe Coding from day one.</span>
+                  <Link
+                    href={`/academy/${course.slug}#course-waitlist`}
+                    className={cn(
+                      "inline-flex w-full items-center justify-center rounded-full border py-2 text-xs font-semibold transition",
+                      course.comingSoon
+                        ? "border-amber-500/30 text-amber-100/90 hover:bg-amber-500/10"
+                        : "border-[#60A5FA]/40 text-[#60A5FA] hover:bg-white/5"
+                    )}
+                  >
+                    {course.comingSoon ? "Waitlist · coming soon" : "Waitlist · this track"}
+                  </Link>
                 </div>
               </article>
             ))}

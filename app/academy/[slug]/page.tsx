@@ -4,12 +4,13 @@ import {
   Code2,
   Bot,
   Users,
-  ShieldCheck,
-  LineChart,
   Rocket,
-  ArrowLeft
+  ArrowLeft,
+  Megaphone,
+  TrendingUp
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CourseWaitlistSection } from "@/components/CourseWaitlistSection";
 
 const DISCORD_INVITE_URL = "https://discord.gg/VJj2ZHc46";
 
@@ -17,8 +18,8 @@ type CourseSlug =
   | "vibe-coding"
   | "ai-automation-web3"
   | "community-management-web3"
-  | "wallet-security-mastery"
-  | "on-chain-basics-analytics";
+  | "content-creation"
+  | "futures-trading";
 
 type Module = {
   week: string;
@@ -33,6 +34,7 @@ type CourseDetail = {
   icon: React.ReactNode;
   ships: string[];
   modules: Module[];
+  comingSoon?: boolean;
 };
 
 const courses: Record<CourseSlug, CourseDetail> = {
@@ -169,80 +171,46 @@ const courses: Record<CourseSlug, CourseDetail> = {
       }
     ]
   },
-  "wallet-security-mastery": {
-    slug: "wallet-security-mastery",
-    title: "Wallet & Security Mastery",
+  "content-creation": {
+    slug: "content-creation",
+    title: "Content Creation",
+    comingSoon: true,
     description:
-      "Protect your bags and your peace. Learn how wallets, approvals, and common attack paths work — and build tiny tools that help you stay safe.",
-    duration: "3–5 weeks · Essential",
-    icon: <ShieldCheck className="h-6 w-6 text-[#60A5FA]" aria-hidden="true" />,
+      "Threads, short-form video, newsletters, and AI-assisted workflows for Web3 brands and builders.",
+    duration: "TBA · Growth track",
+    icon: <Megaphone className="h-6 w-6 text-[#60A5FA]" aria-hidden="true" />,
     ships: [
-      "Multi-wallet setup tailored to how you really use crypto.",
-      "Checklist and runbook for every new mint, dApp, or bridge.",
-      "Small AI-assisted tool that reviews or annotates transactions."
+      "We’ll publish example ships when this track opens.",
+      "Expect content systems you can run weekly with AI + templates.",
+      "Portfolio-ready pieces for brands or your own builder journey."
     ],
     modules: [
       {
-        week: "Week 1",
+        week: "Curriculum",
         topics: [
-          "Hot, warm, and cold wallets — what matters for beginners.",
-          "Approvals, signatures, and what you’re really signing.",
-          "Ship: Clean, documented wallet setup across 2–3 devices."
-        ]
-      },
-      {
-        week: "Weeks 2–3",
-        topics: [
-          "How common scams and exploits work (without scare tactics).",
-          "Using AI to review transactions and contracts at a high level.",
-          "Ship: Personal safety checklist you run before new interactions."
-        ]
-      },
-      {
-        week: "Weeks 4–5",
-        topics: [
-          "Security habits for long-term builders and contributors.",
-          "Designing “panic buttons” and recovery plans.",
-          "Ship: Tiny helper (script or checklist) you’ll keep using."
+          "Week-by-week plan is in progress. Join the waitlist to get notified when Content Creation opens in Phase 1 or later."
         ]
       }
     ]
   },
-  "on-chain-basics-analytics": {
-    slug: "on-chain-basics-analytics",
-    title: "On-Chain Basics & Analytics",
+  "futures-trading": {
+    slug: "futures-trading",
+    title: "Futures Trading",
+    comingSoon: true,
     description:
-      "Learn how blocks, transactions, gas, and analytics tools fit together so you can follow wallets and protocols without drowning in jargon.",
-    duration: "4–6 weeks · Core",
-    icon: <LineChart className="h-6 w-6 text-[#60A5FA]" aria-hidden="true" />,
+      "Risk, sizing, execution, and discipline for crypto futures—opening after we lock the core curriculum.",
+    duration: "TBA · Markets track",
+    icon: <TrendingUp className="h-6 w-6 text-[#60A5FA]" aria-hidden="true" />,
     ships: [
-      "Dashboard that tracks prices, gas, or simple protocol stats.",
-      "Dune or explorer queries that answer real questions.",
-      "Analytics board you can show in interviews or to collaborators."
+      "We’ll publish project ideas when this track opens.",
+      "Focus: risk rules, journaling, and execution you can repeat.",
+      "Built for people who already completed core academy skills."
     ],
     modules: [
       {
-        week: "Week 1",
+        week: "Curriculum",
         topics: [
-          "Blocks, transactions, gas, and explorers — story over jargon.",
-          "Using AI to translate raw data into plain-English insights.",
-          "Ship: Explorer-based walkthrough of a transaction end-to-end."
-        ]
-      },
-      {
-        week: "Weeks 2–3",
-        topics: [
-          "Reading and aggregating data via APIs and analytics tools.",
-          "Prompting AI to help you shape useful dashboards and charts.",
-          "Ship: Simple dashboard for prices or wallet activity."
-        ]
-      },
-      {
-        week: "Weeks 4–6",
-        topics: [
-          "Combining metrics into narratives (health, usage, growth).",
-          "Presenting findings in a way non-nerds can understand.",
-          "Ship: On-chain report or live analytics page you can keep updating."
+          "Syllabus lands after core tracks stabilize. Join the waitlist if you want first access when Futures Trading opens."
         ]
       }
     ]
@@ -298,9 +266,16 @@ export default function CoursePage({ params }: PageParams) {
                   First Sons Academy
                 </span>
               </div>
-              <h1 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-3xl font-semibold tracking-tight text-transparent sm:text-4xl md:text-5xl">
-                {course.title}
-              </h1>
+              <div className="flex flex-wrap items-center gap-3">
+                <h1 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-3xl font-semibold tracking-tight text-transparent sm:text-4xl md:text-5xl">
+                  {course.title}
+                </h1>
+                {course.comingSoon ? (
+                  <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-100">
+                    Coming soon
+                  </span>
+                ) : null}
+              </div>
               <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
                 {course.description}
               </p>
@@ -326,91 +301,121 @@ export default function CoursePage({ params }: PageParams) {
           className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(37,99,235,0.25),transparent_60%)]"
         />
         <div className="mx-auto max-w-4xl space-y-8">
-          <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200/90">
-              Curriculum Breakdown
-            </p>
-            <h2 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
-              Week-by-week, built to ship.
-            </h2>
-            <p className="text-sm leading-relaxed text-slate-200 sm:text-base">
-              Each module is a mini-arc: learn just enough, ship something
-              small, and stack proof instead of watching endless videos.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {course.modules.map((module) => (
-              <article
-                key={module.week}
-                className={cn(
-                  "rounded-2xl border border-white/10 bg-white/5 p-5",
-                  "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-                  "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-                )}
+          {course.comingSoon ? (
+            <div className="rounded-2xl border border-amber-500/25 bg-amber-500/5 p-8 text-center shadow-xl shadow-amber-500/5 backdrop-blur-xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-200/90">
+                Curriculum
+              </p>
+              <h2 className="mt-3 text-xl font-semibold text-slate-50 sm:text-2xl">
+                This track is coming soon
+              </h2>
+              <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-slate-300">
+                We&apos;re finalizing the week-by-week plan. Join the waitlist to
+                get notified when {course.title} opens.
+              </p>
+              <Link
+                href="#course-waitlist"
+                className="mt-6 inline-flex rounded-full bg-gradient-to-r from-[#1E40AF] to-[#3B82F6] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_0_24px_rgba(37,99,235,0.6)]"
               >
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
-                  {module.week}
+                Join waitlist
+              </Link>
+            </div>
+          ) : (
+            <>
+              <div className="space-y-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200/90">
+                  Curriculum Breakdown
                 </p>
-                <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-slate-200 sm:text-sm">
-                  {module.topics.map((topic) => (
-                    <li key={topic} className="flex gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#60A5FA]" />
-                      <span>{topic}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
+                <h2 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
+                  Week-by-week, built to ship.
+                </h2>
+                <p className="text-sm leading-relaxed text-slate-200 sm:text-base">
+                  Each module is a mini-arc: learn just enough, ship something
+                  small, and stack proof instead of watching endless videos.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {course.modules.map((module) => (
+                  <article
+                    key={module.week}
+                    className={cn(
+                      "rounded-2xl border border-white/10 bg-white/5 p-5",
+                      "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
+                      "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
+                    )}
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
+                      {module.week}
+                    </p>
+                    <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-slate-200 sm:text-sm">
+                      {module.topics.map((topic) => (
+                        <li key={topic} className="flex gap-2">
+                          <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#60A5FA]" />
+                          <span>{topic}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </section>
 
       {/* What You'll Ship */}
-      <section className="relative border-t border-slate-800/70 px-4 py-16 md:px-6 md:py-20 lg:px-8">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom,_rgba(30,64,175,0.45),transparent_60%)]"
-        />
-        <div className="mx-auto max-w-4xl space-y-8">
-          <div className="space-y-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200/90">
-              What You&apos;ll Ship
-            </p>
-            <h2 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
-              Real projects, not just theory.
-            </h2>
-            <p className="text-sm leading-relaxed text-slate-200 sm:text-base">
-              You won&apos;t just collect lecture notes—you&apos;ll leave with
-              links, repos, and on-chain proof you can show in a portfolio or
-              interview.
-            </p>
-          </div>
+      {!course.comingSoon ? (
+        <section className="relative border-t border-slate-800/70 px-4 py-16 md:px-6 md:py-20 lg:px-8">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_bottom,_rgba(30,64,175,0.45),transparent_60%)]"
+          />
+          <div className="mx-auto max-w-4xl space-y-8">
+            <div className="space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200/90">
+                What You&apos;ll Ship
+              </p>
+              <h2 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
+                Real projects, not just theory.
+              </h2>
+              <p className="text-sm leading-relaxed text-slate-200 sm:text-base">
+                You won&apos;t just collect lecture notes—you&apos;ll leave with
+                links, repos, and on-chain proof you can show in a portfolio or
+                interview.
+              </p>
+            </div>
 
-          <div className="grid gap-4 md:grid-cols-3">
-            {course.ships.map((ship) => (
-              <article
-                key={ship}
-                className={cn(
-                  "flex h-full flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4",
-                  "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-                  "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <Rocket className="h-4 w-4 text-[#60A5FA]" aria-hidden="true" />
-                  <p className="text-xs font-semibold text-slate-50 sm:text-sm">
-                    Ship
+            <div className="grid gap-4 md:grid-cols-3">
+              {course.ships.map((ship) => (
+                <article
+                  key={ship}
+                  className={cn(
+                    "flex h-full flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4",
+                    "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
+                    "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
+                  )}
+                >
+                  <div className="flex items-center gap-2">
+                    <Rocket className="h-4 w-4 text-[#60A5FA]" aria-hidden="true" />
+                    <p className="text-xs font-semibold text-slate-50 sm:text-sm">
+                      Ship
+                    </p>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-slate-200 sm:text-xs">
+                    {ship}
                   </p>
-                </div>
-                <p className="text-[11px] leading-relaxed text-slate-200 sm:text-xs">
-                  {ship}
-                </p>
-              </article>
-            ))}
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
+
+      <CourseWaitlistSection
+        courseSlug={params.slug}
+        courseTitle={course.title}
+      />
 
       {/* CTA */}
       <section className="relative border-t border-slate-800/70 px-4 pb-16 pt-12 md:px-6 md:pb-20 md:pt-16 lg:px-8">
@@ -451,4 +456,3 @@ export default function CoursePage({ params }: PageParams) {
     </main>
   );
 }
-

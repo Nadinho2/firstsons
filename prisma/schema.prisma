@@ -1,0 +1,31 @@
+// -----------------------------------------------------------------------------
+// Prisma + MongoDB — optional persistence for premium enrollments.
+// Run: npm install prisma @prisma/client && npx prisma generate
+// DATABASE_URL=mongodb+srv://user:pass@cluster/db
+// -----------------------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+/// $50 premium class purchase (after payment webhook, create row + send React Email)
+model PremiumEnrollment {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  fullName    String?
+  course      String
+  /// Store cents e.g. 5000 = $50.00
+  amountCents Int
+  currency    String   @default("usd")
+  /// On-chain receipt (optional)
+  txHash      String?
+  /// Resend email id for support lookups
+  resendEmailId String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

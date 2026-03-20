@@ -3,6 +3,9 @@ import Link from "next/link";
 import React from "react";
 import { submitWaitlist } from "@/app/actions/waitlist";
 import { WaitlistForm } from "@/components/WaitlistForm";
+import { WaitlistFormFields } from "@/components/WaitlistFormFields";
+import { WAITLIST_COURSES } from "@/lib/waitlist-courses";
+import { cn } from "@/lib/utils";
 
 /** Ensure waitlist server action runs on the server (not a stale static shell). */
 export const dynamic = "force-dynamic";
@@ -13,79 +16,7 @@ export const metadata: Metadata = {
     "First Sons is a Web3 academy for people starting from zero. You learn by building: Vibe Coding with tools like Cursor, automation, community ops, and on-chain basics—mostly on real projects, not long theory videos."
 };
 
-type CourseTag = {
-  label: string;
-};
-
-type Course = {
-  title: string;
-  description: string;
-  tags: CourseTag[];
-  slug: string;
-};
-
-const courses: Course[] = [
-  {
-    title: "Vibe Coding",
-    description:
-      "Use Claude, Cursor, and Grok to build full-stack Web3 apps fast. Practice writing clear prompts, then ship real dApps from week one.",
-    tags: [
-      { label: "Trending" },
-      { label: "6-8 Weeks" },
-      { label: "Core Skill" },
-      { label: "+∞" },
-    ],
-    slug: "vibe-coding",
-  },
-  {
-    title: "AI Automation in Web3",
-    description:
-      "Wire up bots that trade on rules you set, help moderate Discord, draft posts, and run simple on-chain tasks.",
-    tags: [
-      { label: "Trending" },
-      { label: "5-7 Weeks" },
-      { label: "Advanced" },
-      { label: "+∞" },
-    ],
-    slug: "ai-automation-web3",
-  },
-  {
-    title: "Community Management for Web3",
-    description:
-      "Build Discord bots, run events, set up engagement loops, and grow communities from 0 to 10k.",
-    tags: [
-      { label: "High Demand" },
-      { label: "4-6 Weeks" },
-      { label: "Operations" },
-      { label: "+∞" },
-    ],
-    slug: "community-management-web3",
-  },
-  {
-    title: "Wallet & Security Mastery",
-    description:
-      "Set up wallets, secure your assets, and build simple security helpers with AI.",
-    tags: [
-      { label: "Essential" },
-      { label: "3-5 Weeks" },
-      { label: "Beginner" },
-      { label: "+∞" },
-    ],
-    slug: "wallet-security-mastery",
-  },
-  {
-    title: "On-Chain Basics & Analytics",
-    description:
-      "Build live price dashboards, gas calculators, and simple data tools using AI.",
-    tags: [
-      { label: "Core" },
-      { label: "4-6 Weeks" },
-      { label: "Beginner-Intermediate" },
-      { label: "+∞" },
-    ],
-    slug: "on-chain-basics-analytics",
-  },
-];
+const courses = WAITLIST_COURSES;
 
 const featureHighlights = [
   {
@@ -245,13 +176,28 @@ const CoursesSection: React.FC = () => {
         <div className="grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
           {courses.map((course) => (
             <article
-              key={course.title}
-              className="glass-card-strong group relative flex h-full flex-col overflow-hidden p-5 md:p-6"
+              key={course.slug}
+              className={cn(
+                "glass-card-strong group relative flex h-full flex-col overflow-hidden p-5 md:p-6",
+                course.comingSoon && "border-amber-500/25"
+              )}
             >
               <div className="pointer-events-none absolute inset-px rounded-[1.05rem] bg-gradient-to-br from-white/4 via-transparent to-blue-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="relative flex-1 space-y-3">
-                <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/10 px-3 py-1 text-[11px] font-medium text-blue-100/90">
-                  <span className="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.9)]" />
+                <div
+                  className={cn(
+                    "inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-medium",
+                    course.comingSoon
+                      ? "bg-amber-500/15 text-amber-100/90"
+                      : "bg-blue-500/10 text-blue-100/90"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "h-1.5 w-1.5 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.9)]",
+                      course.comingSoon ? "bg-amber-400" : "bg-blue-400"
+                    )}
+                  />
                   <span>{course.title}</span>
                 </div>
                 <p className="text-sm font-semibold text-slate-50">
@@ -274,18 +220,33 @@ const CoursesSection: React.FC = () => {
                   ))}
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Link
-                    href="/#waitlist"
-                    className="btn-glow w-full justify-center py-2.5 text-xs"
-                  >
-                    Enroll in Beta
-                  </Link>
-                  <Link
-                    href={`/academy/${course.slug}`}
-                    className="btn-outline w-full justify-center py-2.5 text-xs"
-                  >
-                    View Curriculum →
-                  </Link>
+                  {course.comingSoon ? (
+                    <span
+                      aria-disabled="true"
+                      className="inline-flex w-full cursor-not-allowed items-center justify-center rounded-full border border-slate-600/50 bg-slate-900/40 py-2.5 text-xs font-medium text-slate-500 opacity-80"
+                    >
+                      Enroll in Beta
+                    </span>
+                  ) : (
+                    <Link
+                      href={`/academy/${course.slug}#course-waitlist`}
+                      className="btn-glow w-full justify-center py-2.5 text-xs"
+                    >
+                      Enroll in Beta
+                    </Link>
+                  )}
+                  {course.comingSoon ? (
+                    <span className="inline-flex w-full cursor-not-allowed items-center justify-center rounded-full border border-slate-600/60 bg-slate-900/50 py-2.5 text-xs font-medium text-slate-500">
+                      Coming soon
+                    </span>
+                  ) : (
+                    <Link
+                      href={`/academy/${course.slug}`}
+                      className="btn-outline w-full justify-center py-2.5 text-xs"
+                    >
+                      View Curriculum →
+                    </Link>
+                  )}
                 </div>
               </div>
             </article>
@@ -353,56 +314,13 @@ const WaitlistSection: React.FC = () => {
           Ready to join the fam?
         </h2>
         <p className="mt-3 text-xs leading-relaxed text-slate-300 sm:text-sm">
-          Join the waitlist for the first cohort. Limited spots. You&apos;ll be
-          the first to hear when Phase 1 goes live.
+          Choose your course, then add your email and Discord. We&apos;ll route
+          updates for that track.
         </p>
 
         <div className="mt-8">
           <WaitlistForm action={submitWaitlist}>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="flex flex-col gap-1.5 text-left">
-                <label htmlFor="fullName" className="text-[11px] font-medium text-slate-200 sm:text-xs">
-                  Name <span className="text-slate-400">(optional)</span>
-                </label>
-                <input
-                  id="fullName"
-                  name="fullName"
-                  type="text"
-                  placeholder="Your name"
-                  className="w-full rounded-xl border border-slate-700/70 bg-slate-900/60 px-3.5 py-2.5 text-sm text-slate-50 outline-none placeholder:text-slate-500 focus:border-[#60A5FA]/80 focus:ring-2 focus:ring-[#60A5FA]/40"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5 text-left">
-                <label htmlFor="email" className="text-[11px] font-medium text-slate-200 sm:text-xs">
-                  Email <span className="text-rose-400/80">*</span>
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="you@example.com"
-                  className="w-full rounded-xl border border-slate-700/70 bg-slate-900/60 px-3.5 py-2.5 text-sm text-slate-50 outline-none placeholder:text-slate-500 focus:border-[#60A5FA]/80 focus:ring-2 focus:ring-[#60A5FA]/40"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col gap-1.5 text-left">
-              <label htmlFor="discord" className="text-[11px] font-medium text-slate-200 sm:text-xs">
-                Discord Username <span className="text-rose-400/80">*</span>
-              </label>
-              <input
-                id="discord"
-                name="discord"
-                type="text"
-                required
-                placeholder="@yourhandle"
-                className="w-full rounded-xl border border-slate-700/70 bg-slate-900/60 px-3.5 py-2.5 text-sm text-slate-50 outline-none placeholder:text-slate-500 focus:border-[#60A5FA]/80 focus:ring-2 focus:ring-[#60A5FA]/40"
-              />
-            </div>
-            <p className="text-[11px] text-slate-500">
-              We&apos;ll only use your details to contact you about the First Sons
-              cohort. No spam, ever.
-            </p>
+            <WaitlistFormFields variant="footer" idPrefix="home-" />
           </WaitlistForm>
         </div>
       </div>
