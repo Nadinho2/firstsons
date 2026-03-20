@@ -1,7 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { sendWaitlistConfirmationEmail } from "@/lib/email";
+import {
+  sendWaitlistConfirmationEmail,
+  waitlistEmailEnvStatus
+} from "@/lib/email";
 
 /**
  * Top-level server action (module has "use server").
@@ -18,11 +21,9 @@ export async function submitWaitlist(formData: FormData): Promise<void> {
   const discord =
     typeof discordValue === "string" ? discordValue.trim() : "";
 
-  // Debug line in Vercel → Functions → Logs (no PII)
   console.log("[waitlist] action invoked", {
     hasEmail: Boolean(email),
-    hasResendKey: Boolean(process.env.RESEND_API_KEY),
-    hasFrom: Boolean(process.env.WAITLIST_FROM_EMAIL)
+    ...waitlistEmailEnvStatus()
   });
 
   if (!email) {
