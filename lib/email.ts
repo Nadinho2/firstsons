@@ -126,7 +126,7 @@ export async function sendWaitlistConfirmationEmail(
   const { data, error } = await resend.emails.send({
     from: config.fromAddress,
     to: [email],
-    subject: "You’re on the First Sons waitlist",
+    subject: "Firstsons Academy",
     text,
     html,
     tags: [{ name: "source", value: "waitlist" }]
