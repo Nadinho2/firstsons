@@ -12,6 +12,8 @@ import {
   Text,
 } from "@react-email/components";
 import * as React from "react";
+import { brand } from "./brand";
+import { EmailBrandLogoRow } from "./EmailBrandLogo";
 
 export type PremiumEnrollmentEmailProps = {
   name: string;
@@ -22,6 +24,8 @@ export type PremiumEnrollmentEmailProps = {
   txHash?: string;
   /** Premium / VIP Discord invite */
   premiumDiscordInvite: string;
+  /** Optional hosted logo — see EMAIL_LOGO_URL */
+  logoUrl?: string;
 };
 
 /**
@@ -33,6 +37,7 @@ export default function PremiumEnrollmentEmail({
   amount,
   txHash,
   premiumDiscordInvite,
+  logoUrl,
 }: PremiumEnrollmentEmailProps) {
   const greeting = name?.trim() ? name.trim() : "there";
 
@@ -43,6 +48,11 @@ export default function PremiumEnrollmentEmail({
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.heroBar} />
+
+          <Section style={styles.logoTop}>
+            <EmailBrandLogoRow variant="dark" logoUrl={logoUrl} marginBottom={4} />
+            <Text style={styles.premiumBadge}>PREMIUM</Text>
+          </Section>
 
           <Section style={styles.pad}>
             <Text style={styles.receiptLabel}>RECEIPT</Text>
@@ -99,10 +109,6 @@ export default function PremiumEnrollmentEmail({
               Questions? Reply to this email.
             </Text>
           </Section>
-
-          <Section style={styles.logoRow}>
-            <Text style={styles.logoText}>FS · PREMIUM</Text>
-          </Section>
         </Container>
       </Body>
     </Html>
@@ -131,14 +137,13 @@ function shortHash(hash: string) {
 
 const styles = {
   body: {
-    backgroundColor: "#020617",
-    fontFamily:
-      'ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif',
+    backgroundColor: brand.backgroundDeep,
+    fontFamily: brand.fontFamily,
     margin: 0,
     padding: "32px 0",
   },
   container: {
-    backgroundColor: "#0F172A",
+    backgroundColor: brand.background,
     borderRadius: "16px",
     border: "1px solid rgba(51, 65, 85, 0.5)",
     boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.45)",
@@ -147,15 +152,28 @@ const styles = {
     overflow: "hidden",
   },
   heroBar: {
-    background: "linear-gradient(90deg, #1E40AF 0%, #2563EB 40%, #60A5FA 100%)",
+    background: brand.gradient.heroBar,
+    backgroundColor: brand.primary,
     height: "6px",
     width: "100%",
   },
+  logoTop: {
+    padding: "22px 28px 0",
+    textAlign: "center" as const,
+    backgroundColor: brand.background,
+  },
+  premiumBadge: {
+    margin: "4px 0 0",
+    fontSize: "11px",
+    fontWeight: 700,
+    letterSpacing: "0.22em",
+    color: brand.accent,
+  },
   pad: {
-    padding: "28px 28px 32px",
+    padding: "16px 28px 32px",
   },
   receiptLabel: {
-    color: "#60A5FA",
+    color: brand.accent,
     fontSize: "11px",
     fontWeight: 700,
     letterSpacing: "0.2em",
@@ -176,7 +194,7 @@ const styles = {
     margin: "0 0 20px",
   },
   accent: {
-    color: "#60A5FA",
+    color: brand.accent,
   },
   receiptBox: {
     backgroundColor: "rgba(15, 23, 42, 0.9)",
@@ -203,7 +221,7 @@ const styles = {
     margin: 0,
   },
   monoLink: {
-    color: "#60A5FA",
+    color: brand.accent,
     fontFamily: "ui-monospace, monospace",
     fontSize: "13px",
   },
@@ -218,7 +236,8 @@ const styles = {
     margin: "0 0 20px",
   },
   button: {
-    background: "linear-gradient(90deg, #1E40AF 0%, #3B82F6 100%)",
+    backgroundColor: brand.primaryMid,
+    background: brand.gradient.cta,
     borderRadius: "9999px",
     color: "#ffffff",
     display: "inline-block",
@@ -236,29 +255,17 @@ const styles = {
     wordBreak: "break-all" as const,
   },
   link: {
-    color: "#60A5FA",
+    color: brand.accent,
   },
   hr: {
     borderColor: "rgba(51, 65, 85, 0.6)",
     margin: "24px 0",
   },
   footer: {
-    color: "#64748b",
+    color: brand.textMuted,
     fontSize: "12px",
     lineHeight: 1.6,
     margin: 0,
     textAlign: "center" as const,
-  },
-  logoRow: {
-    backgroundColor: "#020617",
-    padding: "12px",
-    textAlign: "center" as const,
-  },
-  logoText: {
-    color: "#60A5FA",
-    fontSize: "12px",
-    fontWeight: 700,
-    letterSpacing: "0.15em",
-    margin: 0,
   },
 };

@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { getEmailLogoUrl } from "@/emails/brand";
 import PremiumEnrollmentEmail from "@/emails/PremiumEnrollmentEmail";
 import WelcomeEmail from "@/emails/WelcomeEmail";
 import {
@@ -71,6 +72,7 @@ export async function sendPremiumEnrollmentEmailReact(input: {
   }
 
   const resend = new Resend(apiKey);
+  const logoUrl = getEmailLogoUrl();
   const { data, error } = await resend.emails.send({
     from,
     to: [input.to],
@@ -82,6 +84,7 @@ export async function sendPremiumEnrollmentEmailReact(input: {
         amount={input.amount}
         txHash={input.txHash}
         premiumDiscordInvite={input.premiumDiscordInvite}
+        logoUrl={logoUrl}
       />
     ),
     tags: [

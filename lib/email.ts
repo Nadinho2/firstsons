@@ -1,4 +1,8 @@
+import { createElement } from "react";
+import { render } from "@react-email/render";
 import { Resend } from "resend";
+import { getEmailLogoUrl } from "@/emails/brand";
+import WaitlistConfirmationEmail from "@/emails/WaitlistConfirmationEmail";
 import {
   getResendApiKey,
   getResendFromAddress,
@@ -13,14 +17,6 @@ export type WaitlistEmailPayload = {
   courseSlug?: string;
   courseTitle?: string;
 };
-
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
 
 /** For server-action logs (Vercel) — must match getFromAddress() logic. */
 export function waitlistEmailEnvStatus(): {
@@ -60,31 +56,25 @@ export async function sendWaitlistConfirmationEmail(
 
   const { email, fullName, discord, courseTitle } = payload;
 
-  const trackLine = courseTitle
-    ? `Track: ${courseTitle}.`
-    : "We’ll route your cohort updates for the track you selected.";
+  const displayName = fullName?.trim() || "there";
+  const track =
+    courseTitle?.trim() ||
+    "Your selected course (we’ll confirm from your signup)";
+  const discordUrl =
+    process.env.DISCORD_INVITE_URL?.trim() || "https://discord.gg/VJj2ZHc46";
+  const xUrl = process.env.X_URL?.trim() || "https://x.com/Firstsons_Dao";
 
-  const text = [
-    `Hey${fullName ? ` ${fullName}` : ""},`,
-    "",
-    "You’re on the First Sons Phase 1 waitlist.",
-    trackLine,
-    "When spots open, we’ll email you how to join the cohort, start Vibe Coding, and ship your first on-chain projects with the group.",
-    "",
-    discord
-      ? `We’ve got your Discord handle as: ${discord}`
-      : "Have Discord ready so we can give you the right role quickly.",
-    "",
-    "In the meantime:",
-    "- Join the Discord: https://discord.gg/firstsonsdao",
-    "- Follow us on X: https://x.com/Firstsons_Dao",
-    "",
-    "— First Sons"
-  ].join("\n");
+  const emailNode = createElement(WaitlistConfirmationEmail, {
+    name: displayName,
+    track,
+    discordHandle: discord?.trim() || "—",
+    discordUrl,
+    xUrl,
+    logoUrl: getEmailLogoUrl(),
+  });
 
-  const html = `<div style="font-family:system-ui,sans-serif;line-height:1.5;color:#0f172a">${escapeHtml(
-    text
-  ).replace(/\n/g, "<br/>")}</div>`;
+  const html = await render(emailNode);
+  const text = await render(emailNode, { plainText: true });
 
   if (!isValidResendFromFormat(config.fromAddress)) {
     throw new Error(
@@ -95,8 +85,8 @@ export async function sendWaitlistConfirmationEmail(
   const resend = new Resend(config.apiKey);
 
   const subject = courseTitle
-    ? `First Sons — ${courseTitle} waitlist`
-    : "First Sons — Phase 1 waitlist";
+    ? `Welcome to the First Sons Waitlist — ${courseTitle}`
+    : "Welcome to the First Sons Waitlist";
 
   const { data, error } = await resend.emails.send({
     from: config.fromAddress,

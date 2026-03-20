@@ -12,12 +12,16 @@ import {
   Text,
 } from "@react-email/components";
 import * as React from "react";
+import { brand } from "./brand";
+import { EmailBrandLogoRow } from "./EmailBrandLogo";
 
 export type WelcomeEmailProps = {
   /** Display name or "there" if empty */
   name: string;
   /** Full Discord invite URL */
   discordInvite: string;
+  /** Optional hosted logo — see EMAIL_LOGO_URL */
+  logoUrl?: string;
 };
 
 /**
@@ -27,6 +31,7 @@ export type WelcomeEmailProps = {
 export default function WelcomeEmail({
   name,
   discordInvite,
+  logoUrl,
 }: WelcomeEmailProps) {
   const greeting = name?.trim() ? name.trim() : "there";
 
@@ -38,6 +43,10 @@ export default function WelcomeEmail({
         <Container style={styles.container}>
           {/* Hero gradient bar */}
           <Section style={styles.heroBar} />
+
+          <Section style={styles.logoTop}>
+            <EmailBrandLogoRow variant="dark" logoUrl={logoUrl} marginBottom={8} />
+          </Section>
 
           <Section style={styles.pad}>
             <Heading as="h1" style={styles.h1}>
@@ -75,28 +84,22 @@ export default function WelcomeEmail({
               </Link>
             </Text>
           </Section>
-
-          {/* Optional: swap src for your hosted logo when ready */}
-          <Section style={styles.logoRow}>
-            <Text style={styles.logoText}>FS</Text>
-          </Section>
         </Container>
       </Body>
     </Html>
   );
 }
 
-/** Brand tokens — mirror site (Tailwind-like values as inline CSS) */
+/** Brand tokens — mirror site (see emails/brand.ts) */
 const styles = {
   body: {
-    backgroundColor: "#020617",
-    fontFamily:
-      'ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif',
+    backgroundColor: brand.backgroundDeep,
+    fontFamily: brand.fontFamily,
     margin: 0,
     padding: "32px 0",
   },
   container: {
-    backgroundColor: "#0F172A",
+    backgroundColor: brand.background,
     borderRadius: "16px",
     border: "1px solid rgba(51, 65, 85, 0.5)",
     boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.45)",
@@ -105,12 +108,18 @@ const styles = {
     overflow: "hidden",
   },
   heroBar: {
-    background: "linear-gradient(90deg, #1E40AF 0%, #3B82F6 50%, #60A5FA 100%)",
+    background: brand.gradient.heroBar,
+    backgroundColor: brand.primary,
     height: "6px",
     width: "100%",
   },
+  logoTop: {
+    padding: "24px 28px 0",
+    textAlign: "center" as const,
+    backgroundColor: brand.background,
+  },
   pad: {
-    padding: "28px 28px 32px",
+    padding: "20px 28px 32px",
   },
   h1: {
     color: "#f8fafc",
@@ -137,7 +146,8 @@ const styles = {
     margin: "0 0 20px",
   },
   button: {
-    background: "linear-gradient(90deg, #1E40AF 0%, #3B82F6 100%)",
+    backgroundColor: brand.primaryMid,
+    background: brand.gradient.cta,
     borderRadius: "9999px",
     color: "#ffffff",
     display: "inline-block",
@@ -155,7 +165,7 @@ const styles = {
     wordBreak: "break-all" as const,
   },
   link: {
-    color: "#60A5FA",
+    color: brand.accent,
   },
   linkMuted: {
     color: "#64748b",
@@ -165,22 +175,10 @@ const styles = {
     margin: "24px 0",
   },
   footer: {
-    color: "#64748b",
+    color: brand.textMuted,
     fontSize: "12px",
     lineHeight: 1.6,
     margin: 0,
     textAlign: "center" as const,
-  },
-  logoRow: {
-    backgroundColor: "#020617",
-    padding: "12px",
-    textAlign: "center" as const,
-  },
-  logoText: {
-    color: "#60A5FA",
-    fontSize: "14px",
-    fontWeight: 700,
-    letterSpacing: "0.2em",
-    margin: 0,
   },
 };
