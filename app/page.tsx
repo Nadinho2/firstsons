@@ -8,7 +8,7 @@ import { WaitlistForm } from "@/components/WaitlistForm";
 export const metadata: Metadata = {
   title: "First Sons — Web3 Academy for Complete Beginners",
   description:
-    "First Sons is a Web3 academy for complete beginners. Learn AI-powered Vibe Coding, automation, community management, and on-chain skills by shipping real projects with AI."
+    "First Sons is a Web3 academy for people starting from zero. You learn by building: Vibe Coding with tools like Cursor, automation, community ops, and on-chain basics—mostly on real projects, not long theory videos."
 };
 
 type CourseTag = {
@@ -26,7 +26,7 @@ const courses: Course[] = [
   {
     title: "Vibe Coding",
     description:
-      "Leverage AI tools like Claude, Cursor & Grok to build full-stack Web3 apps in hours. Master prompt engineering and ship real dApps from day one.",
+      "Use Claude, Cursor, and Grok to build full-stack Web3 apps fast. Practice writing clear prompts, then ship real dApps from week one.",
     tags: [
       { label: "Trending" },
       { label: "6-8 Weeks" },
@@ -38,7 +38,7 @@ const courses: Course[] = [
   {
     title: "AI Automation in Web3",
     description:
-      "Build AI agents that auto-trade, auto-moderate Discord, generate content, and run on-chain tasks.",
+      "Wire up bots that trade on rules you set, help moderate Discord, draft posts, and run simple on-chain tasks.",
     tags: [
       { label: "Trending" },
       { label: "5-7 Weeks" },
@@ -50,7 +50,7 @@ const courses: Course[] = [
   {
     title: "Community Management for Web3",
     description:
-      "Vibe-build Discord bots, run events, create engagement systems, and grow communities from 0 to 10k.",
+      "Build Discord bots, run events, set up engagement loops, and grow communities from 0 to 10k.",
     tags: [
       { label: "High Demand" },
       { label: "4-6 Weeks" },
@@ -62,7 +62,7 @@ const courses: Course[] = [
   {
     title: "Wallet & Security Mastery",
     description:
-      "Set up wallets, secure your assets, and vibe-code simple security tools.",
+      "Set up wallets, secure your assets, and build simple security helpers with AI.",
     tags: [
       { label: "Essential" },
       { label: "3-5 Weeks" },
@@ -87,24 +87,24 @@ const courses: Course[] = [
 
 const featureHighlights = [
   {
-    title: "Vibe Coding at the Core",
+    title: "Vibe Coding first",
     description:
-      "You describe what you want in plain English. AI builds 90%. You vibe-edit, ship, and learn by doing.",
+      "Say what you want in plain English. The tools draft most of the code; you edit, fix, and ship—so you learn by building.",
   },
   {
-    title: "Discord-First Community",
+    title: "Discord-first",
     description:
-      "Daily vibe rooms, build-alongs, and live support so you never get stuck alone in the terminal.",
+      "Voice and text channels, build-alongs, and people around when you’re stuck—so you’re not alone in the terminal.",
   },
   {
-    title: "Ship Real Projects",
+    title: "Real projects, not demos",
     description:
-      "Your work lives in code and in the jungle — real builds, real feedback, real proof you showed up.",
+      "You keep repos and links you can show off—actual builds, feedback from the group, proof you put in the work.",
   },
   {
-    title: "Skin-in-the-Game Beta",
+    title: "Small first cohort",
     description:
-      "Limited Phase 1 cohort so we can go deep, iterate with you, and actually help you ship.",
+      "Phase 1 is capped on purpose so we can answer questions and help you ship, not just drop a video library on you.",
   },
 ];
 
@@ -135,9 +135,9 @@ const Hero: React.FC = () => {
             Starts Here.
           </h1>
           <p className="max-w-xl text-sm leading-relaxed text-slate-300/90 sm:text-base">
-            The simplest Web3 academy with Vibe Coding at the core. Learn real
-            skills like AI Automation and Community Management by shipping
-            actual projects with AI — no jargon, no overwhelm.
+            A straight-line Web3 academy built around Vibe Coding. Pick up
+            automation and community skills by shipping real projects with help
+            from AI—plain language, no gatekeeping.
           </p>
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             <Link href="/#waitlist" className="btn-glow">
@@ -179,8 +179,8 @@ const Hero: React.FC = () => {
             <div className="space-y-4">
               <p className="text-sm text-slate-200">
                 “We take complete beginners and get them shipping real on-chain
-                projects in weeks, not years. AI does the heavy lifting — you
-                learn how to steer.”
+                projects in weeks, not years. The tools handle most of the
+                typing—you learn how to steer.”
               </p>
               <div className="grid grid-cols-2 gap-4 text-xs text-slate-300">
                 <div className="rounded-xl border border-slate-600/50 bg-slate-900/40 p-3">
@@ -227,16 +227,16 @@ const CoursesSection: React.FC = () => {
         <div className="mb-10 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between">
           <div className="space-y-3">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-300/90">
-              Master the Meta
+              What we teach
             </p>
             <h2 className="text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
-              Master the Meta.
+              Skills you can use right away.
             </h2>
           </div>
           <p className="max-w-xl text-xs leading-relaxed text-slate-300 sm:text-sm">
-            Phase 1 curriculum focuses on high-demand skills taught completely
-            differently: you describe what you want in plain English, AI builds
-            90% of it, you vibe-edit and ship real projects.
+            Phase 1 is built around skills people get paid for: you describe
+            what you want in plain English, the AI drafts most of the code, you
+            edit and ship real projects—not slide decks.
           </p>
         </div>
 
@@ -307,9 +307,9 @@ const WhySection: React.FC = () => {
             Why First Sons Works Differently.
           </h2>
           <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">
-            We combine Vibe Coding, community, and on-chain proof so beginners
-            can skip the overwhelm and get straight to building things that
-            actually matter.
+            Vibe Coding, the Discord group, and on-chain proof of what you
+            shipped—so beginners spend less time stuck in tutorials and more
+            time building.
           </p>
         </div>
 

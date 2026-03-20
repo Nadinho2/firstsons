@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Community | First Sons – Web3 Academy & Discord Fam",
   description:
-    "Step into the First Sons community — a Discord-first Web3 fam focused on growth, empowerment, and shipping real on-chain projects together."
+    "First Sons on Discord: a Web3 group that ships small projects together—beginners welcome, real feedback, no lurker-only culture."
 };
 
 const DISCORD_INVITE_URL = "https://discord.gg/VJj2ZHc46";
@@ -32,15 +32,15 @@ type WhyCard = {
 
 const whyCards: WhyCard[] = [
   {
-    title: "Discord-First Growth",
+    title: "Discord-first",
     description:
-      "Learn by shipping mini-projects live in channels — real feedback from day one, not after some final exam.",
+      "Ship mini-projects in the open—feedback from day one, not a single big exam at the end.",
     icon: <Rocket className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />
   },
   {
-    title: "Instant Builder Support",
+    title: "Fast help",
     description:
-      "Drop prompts, get AI + community edits, vibe-checks, and collabs faster than you can overthink your idea.",
+      "Post a prompt or a bug, get edits from people and tools before you talk yourself out of shipping.",
     icon: (
       <div className="flex items-center gap-1">
         <MessageCircle
@@ -52,9 +52,9 @@ const whyCards: WhyCard[] = [
     )
   },
   {
-    title: "Empowerment for All Levels",
+    title: "All skill levels",
     description:
-      "Absolute beginners welcome. We celebrate first ships and help you level up towards earning and contributing.",
+      "Absolute beginners welcome. We cheer first ships and help you level up toward paid work and real contributions.",
     icon: <Sparkles className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />
   },
   {
@@ -127,12 +127,12 @@ const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "Joined for the academy, stayed for the collabs and the feeling of real empowerment in Web3.",
+      "Joined for the academy, stayed for the collabs and people who want me to win.",
     handle: "@web3viber"
   },
   {
     quote:
-      "This is the Discord where beginners actually grow — no fluff, just builders who want you to win.",
+      "This is the Discord where beginners grow—no fluff, just builders who want you to win.",
     handle: "@firstsonOG"
   }
 ];
@@ -155,9 +155,9 @@ export default function CommunityPage() {
               The First Sons Community
             </h1>
             <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base md:mx-0">
-              Your home for Web3 growth and empowerment. Ship real projects,
-              vibe with builders, and get instant help — all inside our Discord
-              fam. No gatekeeping, just building together in the jungle.
+              A place to get better at Web3 by building. Ship real projects, hang
+              with other builders, and get answers in Discord—no gatekeeping,
+              just people working in the open.
             </p>
           </div>
 
@@ -201,9 +201,9 @@ export default function CommunityPage() {
               A Discord jungle built for shipping.
             </h2>
             <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
-              We&apos;re not here to lurk and complain — this fam is for
-              beginners and builders who want to move, ship, and empower the
-              wider Web3 community together.
+              We&apos;re not here to lurk and complain—this server is for
+              beginners and builders who want to move, ship, and help each other
+              get better at Web3.
             </p>
           </div>
 
@@ -245,8 +245,8 @@ export default function CommunityPage() {
               Welcome to the jungle.
             </h2>
             <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
-              Every channel is designed to push you forward — from your first
-              hello to your first ship and beyond.
+              Each channel has a job—from your first hello to your first ship and
+              what comes after.
             </p>
           </div>
 
@@ -273,7 +273,7 @@ export default function CommunityPage() {
 
           <p className="text-center text-xs text-slate-300 sm:text-sm">
             Weekly mini-projects, raffles, and collabs drop inside these
-            channels — stay active to level up and unlock more of the jungle.
+            channels—stay active to earn roles and see more of what&apos;s going on.
           </p>
         </div>
       </section>
@@ -290,7 +290,7 @@ export default function CommunityPage() {
               Voices from the fam
             </p>
             <h2 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
-              Builders who stepped into the meta.
+              What people say in the server
             </h2>
           </div>
 
@@ -309,7 +309,7 @@ export default function CommunityPage() {
                       {item.handle}
                     </p>
                     <p className="text-[11px] text-slate-300">
-                      Future First Son builder
+                      First Sons member
                     </p>
                   </div>
                 </div>
@@ -340,8 +340,7 @@ export default function CommunityPage() {
             <span className="font-semibold text-[#60A5FA]">
               @Firstsons_Dao
             </span>{" "}
-            on X, and start building your Web3 future with a fam that actually
-            wants you to win.
+            on X,             and start building with a group that wants you to win.
           </p>
 
           <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-center">
@@ -382,11 +381,4 @@ export default function CommunityPage() {
     </main>
   );
 }
-
-/**
- * Summary:
- * - Added CommunityPage with a hero explaining the First Sons community and CTAs to join Discord and follow on X.
- * - Built "Why First Sons Hits Different" glass cards, a detailed "Inside the Discord" channel grid, and testimonial placeholders.
- * - Finished with a final CTA encouraging visitors to join the Discord fam and stay connected via @Firstsons_Dao.
- */
 

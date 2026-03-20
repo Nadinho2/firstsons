@@ -39,19 +39,18 @@ export async function sendWaitlistConfirmationEmail(
     text: [
       `Hey${fullName ? ` ${fullName}` : ""},`,
       "",
-      "You’re officially on the First Sons Phase 1 waitlist.",
-      "As spots open up, we’ll send details on how to join the cohort, start Vibe Coding, and ship your first on-chain projects with the fam.",
+      "You’re on the First Sons Phase 1 waitlist.",
+      "When spots open, we’ll email you how to join the cohort, start Vibe Coding, and ship your first on-chain projects with the group.",
       "",
       discord
-        ? `We’ve also got your Discord handle noted as: ${discord}`
-        : "Make sure you have your Discord ready so we can give you the right role quickly.",
+        ? `We’ve got your Discord handle as: ${discord}`
+        : "Have Discord ready so we can give you the right role quickly.",
       "",
-      "In the meantime, you can:",
+      "In the meantime:",
       "- Join the Discord: https://discord.gg/firstsonsdao",
       "- Follow us on X: https://x.com/Firstsons_Dao",
       "",
-      "LFG,",
-      "The First Sons team"
+      "— First Sons"
     ].join("\n")
   });
 }

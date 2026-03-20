@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Roadmap | First Sons – Web3 Academy & DAO",
   description:
-    "Explore the First Sons roadmap — from Discord-first fam to empowered Web3 builders and DAO. See what we’ve shipped, what’s live now, and what’s coming next."
+    "First Sons roadmap: Discord and academy first, then deeper tracks and DAO plans. What shipped, what’s live, what’s next."
 };
 
 const DISCORD_INVITE_URL = "https://discord.gg/VJj2ZHc46";
@@ -45,7 +45,7 @@ const momentumItems: MomentumItem[] = [
   {
     title: "Academy Beta Prep",
     description:
-      "Vibe Coding method and 5 foundation skills wired up for early members inside Discord.",
+      "Vibe Coding approach and five foundation skills set up for early members in Discord.",
     status: "Current",
     icon: <Sparkles className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />
   },
@@ -85,7 +85,7 @@ const phases: Phase[] = [
   {
     label: "Phase 1",
     timeframe: "Q1–Q2 2026",
-    title: "Academy Beta & Empowerment",
+    title: "Academy Beta & live cohort",
     status: "Live",
     icon: <Rocket className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
     bullets: [
@@ -146,9 +146,9 @@ export default function RoadmapPage() {
               First Sons Roadmap
             </h1>
             <p className="mx-auto max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base md:mx-0">
-              Building from Discord fam to empowered Web3 builders. A transparent
-              path from jungle vibes to real rewards, real skills, and real
-              impact in the ecosystem. 🗽
+              From a Discord-first group to people who ship in Web3. Here’s the
+              rough plan—what we’ve done, what’s running now, and where we’re
+              headed. 🗽
             </p>
           </div>
 
@@ -192,8 +192,8 @@ export default function RoadmapPage() {
               Momentum from the jungle.
             </h2>
             <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
-              First Sons is already moving — here&apos;s what&apos;s live,
-              shipped, and powering the next chapters.
+              First Sons is already moving—here&apos;s what&apos;s live, what
+              shipped, and what we&apos;re building toward next.
             </p>
           </div>
 
@@ -240,8 +240,8 @@ export default function RoadmapPage() {
               From first vibes to full DAO.
             </h2>
             <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
-              Each phase stacks on the last — more skills, more tools, more
-              ownership for the fam. Here&apos;s how we see it playing out.
+              Each phase builds on the last—more skills, more tools, more say for
+              the group. Rough sketch of how we see it.
             </p>
           </div>
 
@@ -292,7 +292,7 @@ export default function RoadmapPage() {
         </div>
       </section>
 
-      {/* Join the Journey */}
+      {/* Final CTA */}
       <section className="relative border-t border-slate-800/70 px-4 py-16 md:px-6 md:py-20 lg:px-8">
         <div
           aria-hidden="true"
@@ -300,15 +300,15 @@ export default function RoadmapPage() {
         />
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200/90">
-            Join the journey
+            Get involved
           </p>
           <h2 className="mt-3 bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
             Be part of what we&apos;re building.
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-slate-200 sm:text-base">
-            Limited beta spots. Jump in early, help shape the roadmap with your
-            feedback, and grow alongside a fam that&apos;s serious about Web3
-            empowerment.
+            Limited beta spots. Jump in early, tell us what&apos;s broken or
+            missing, and grow with a group that&apos;s serious about Web3—not
+            hype threads only.
           </p>
 
           <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
@@ -342,11 +342,4 @@ export default function RoadmapPage() {
     </main>
   );
 }
-
-/**
- * Choices:
- * - Structured the roadmap into clear momentum highlights and phased glass cards with status tags for fast scanning.
- * - Reused the global gradient + glassmorphism system so the page visually matches the rest of First Sons.
- * - Emphasized Discord, academy, and DAO evolution with CTAs that drive users to join Discord, follow on X, and hit the waitlist.
- */
 

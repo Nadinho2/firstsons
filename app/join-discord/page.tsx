@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Welcome to First Sons — Join the Discord",
   description:
-    "Welcome to the First Sons family. Join the Discord to start vibe coding, meet other beginners, and ship your first on-chain projects with AI."
+    "Welcome to First Sons. Join Discord to start building with the group, meet other beginners, and ship your first on-chain projects."
 };
 
 const DISCORD_INVITE_URL = "https://discord.gg/VJj2ZHc46";
@@ -35,9 +35,9 @@ export default function JoinDiscordPage() {
           </h1>
 
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
-            You just took your first step into the meta. Our Discord is where
-            Vibe Coding actually happens — mini-projects, live help, and other
-            beginners shipping their first on-chain builds with AI.
+            You just took a real first step into Web3. Our Discord is where Vibe
+            Coding happens—mini-projects, live help, and other beginners
+            shipping their first on-chain builds.
           </p>
         </section>
 
@@ -61,7 +61,7 @@ export default function JoinDiscordPage() {
                 <span className="font-semibold text-[#60A5FA]">
                   #start-here
                 </span>{" "}
-                to get your First Son role, unlock the beginner tracks, and see
+                to get your First Son role, open the beginner tracks, and see
                 today&apos;s build prompts.
               </p>
             </div>
@@ -70,7 +70,7 @@ export default function JoinDiscordPage() {
             <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
               <p className="text-xs text-slate-300/90 sm:text-sm">
                 It&apos;s free to join. All we ask is that you show up ready to
-                learn, vibe, and ship.
+                learn and ship.
               </p>
 
               <Link
@@ -152,7 +152,7 @@ export default function JoinDiscordPage() {
 
           <div className="space-y-3 text-center sm:text-left">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
-              Stay in the meta
+              Keep this page open
             </p>
             <p className="text-xs leading-relaxed text-slate-300 sm:text-sm">
               Keep this tab open while you jump into Discord. If you ever feel

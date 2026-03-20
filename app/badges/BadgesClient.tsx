@@ -97,12 +97,12 @@ const BadgesInner: React.FC = () => {
             </h1>
 
             <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
-              Earn tiered NFTs as you level up in the academy —{" "}
+              Earn tiered NFTs as you move through the academy—{" "}
               <span className="font-semibold text-[#60A5FA]">
                 OG → Participant → Completer
               </span>
-              . Each badge is on-chain proof that you showed up, vibed, and
-              shipped with the fam.
+              . Each badge is on-chain proof that you showed up and shipped with
+              the group.
             </p>
 
             <div className="flex flex-wrap items-center gap-4">
@@ -269,7 +269,7 @@ const BadgesInner: React.FC = () => {
                       className="inline-flex w-full cursor-not-allowed items-center justify-center rounded-full border border-slate-600/60 bg-slate-900/60 px-4 py-2.5 text-[11px] font-semibold text-slate-400"
                     >
                       {tier.disabledText ??
-                        "This badge will unlock later in the journey."}
+                        "This badge opens in a later phase."}
                     </button>
                   ) : (
                     <button
@@ -324,9 +324,8 @@ const BadgesInner: React.FC = () => {
             Join the fam and start earning.
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-slate-200 sm:text-base">
-            Badges are for builders who actually show up. Jump into Discord,
-            join the academy tracks, and start stacking on-chain proof of your
-            growth.
+            Badges are for people who show up. Join Discord, work through the
+            academy tracks, and stack proof on-chain as you go.
           </p>
 
           <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-center">

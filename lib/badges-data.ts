@@ -29,7 +29,7 @@ export const badgeTiers: BadgeTier[] = [
     id: 0,
     name: "First Sons OG Badge",
     description:
-      "Exclusive OG badge for early First Sons family members. Priority access, special Discord roles, raffles & builder perks.",
+      "For early First Sons members: early access, special Discord roles, raffles, and builder perks.",
     accentClass: "text-yellow-400",
     image: `${IPFS_GATEWAY}/QmWiecXk4xH7CpZsCk8hEqxcSaRNUcqRPXGkSRMkfHU1pn/0.jpg`,
     attributes: [
@@ -46,7 +46,7 @@ export const badgeTiers: BadgeTier[] = [
     id: 1,
     name: "Participant Badge",
     description:
-      "You showed up, vibed in class, and contributed to the jungle. Keep shipping and stacking proof.",
+      "You showed up in class and contributed to the community. Keep shipping and stacking proof.",
     accentClass: "text-[#60A5FA]",
     image: `${IPFS_GATEWAY}/QmQaj924GSaePtRKjxptqrBBqc6amSNBDC2JLgAPKNhkm1/0.jpg`,
     attributes: [
@@ -66,7 +66,7 @@ export const badgeTiers: BadgeTier[] = [
       "You shipped a real project with the fam. Builder status unlocked — this badge hits different.",
     accentClass: "text-emerald-400",
     disabled: true,
-    disabledText: "Submit project in Discord to unlock",
+    disabledText: "Post your project in Discord to unlock",
     image: `${IPFS_GATEWAY}/Qmeuxmjc92YX7ithMn5C6qepaeszsSErJuM8FHpTUu2Mjz/0.jpg`,
     attributes: [
       { trait_type: "Tier", value: "Completer" },

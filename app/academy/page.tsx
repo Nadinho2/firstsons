@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "First Sons Academy — Learn Web3 by Shipping",
   description:
-    "Explore the First Sons Academy. Learn Web3 by shipping real projects from day one using Vibe Coding, AI, and Discord — no prior experience required."
+    "First Sons Academy: learn Web3 by shipping small projects from day one—Vibe Coding, Discord help, no prior experience required."
 };
 
 type CourseCard = {
@@ -34,9 +34,9 @@ const courseCards: CourseCard[] = [
     levelTag: "Core",
     icon: <Sparkles className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
     bullets: [
-      "Turn plain-English ideas into real projects with AI.",
-      "Master prompting flows for full-stack Web3 dApps.",
-      "Learn to vibe-edit and debug with AI as your pair.",
+      "Turn plain-English ideas into real projects with AI help.",
+      "Break big asks into steps and get full-stack Web3 UIs out of the tools.",
+      "Edit and debug with AI next to you like a patient pair programmer.",
       "Ship multiple small builds instead of one big final exam."
     ]
   },
@@ -47,7 +47,7 @@ const courseCards: CourseCard[] = [
     icon: <BrainCircuit className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
     bullets: [
       "Build bots that watch wallets, prices, and on-chain events.",
-      "Automate Discord and Twitter flows with AI agents.",
+      "Automate Discord and Twitter flows with scripts and bots.",
       "Connect scripts to RPCs, APIs, and simple smart contracts.",
       "Ship your own automation stack for a project or community."
     ]
@@ -99,7 +99,7 @@ const journeySteps: JourneyStep[] = [
   {
     title: "Join Discord & Waitlist",
     description:
-      "Hop into the server, say hi, and add your name to the beta list. No pressure, just vibes."
+      "Hop into the server, say hi, and add your name to the beta list. No pressure—say hi when you&apos;re ready."
   },
   {
     title: "Beta Access & Onboarding",
@@ -126,7 +126,7 @@ const journeySteps: JourneyStep[] = [
 const promptExample = {
   prompt: "Build a simple wallet checker dApp that shows ETH balance for any address on mainnet.",
   result:
-    "AI generates a Next.js page with an input for a wallet address, calls a public RPC or provider, and renders the current ETH balance with basic error handling."
+    "You get a Next.js page with a wallet input, a call to a public RPC, and the ETH balance on screen—with basic error handling when the address is bad."
 };
 
 export default function AcademyPage() {
@@ -148,9 +148,8 @@ export default function AcademyPage() {
             </h1>
 
             <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
-              Ship real Web3 projects from day one. Learn by doing — powered by
-              Vibe Coding and a Discord community that refuses to let beginners
-              stay stuck.
+              Ship real Web3 projects from day one. You learn by doing—with
+              Vibe Coding and a Discord where people answer beginner questions.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
@@ -175,7 +174,7 @@ export default function AcademyPage() {
         <div className="mx-auto max-w-5xl space-y-10">
           <div className="space-y-3 text-center md:text-left">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200/90">
-              Vibe Coding — How It Actually Works
+              Vibe Coding — how it works
             </p>
             <h2 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
               Describe in plain English. Ship real projects.
@@ -199,7 +198,7 @@ export default function AcademyPage() {
                 step: "02",
                 title: "AI drafts the code",
                 description:
-                  "Use curated prompts to have AI generate a working first version in minutes, not weeks."
+                  "Start from a few starter prompts, tweak them, and get a working first version in minutes instead of weeks."
               },
               {
                 step: "03",
@@ -247,7 +246,7 @@ export default function AcademyPage() {
               </div>
               <div className="space-y-1.5">
                 <p className="text-[11px] font-medium text-slate-300">
-                  What AI ships first:
+                  What you get back first:
                 </p>
                 <p className="rounded-xl border border-white/10 bg-slate-900/70 px-3 py-2 text-xs leading-relaxed text-slate-200">
                   {promptExample.result}
@@ -273,9 +272,9 @@ export default function AcademyPage() {
               Phase 1: Build your on-chain foundation.
             </h2>
             <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
-              Five tracks that cover the skills you actually need to ship in
-              Web3 — from your first wallet all the way to running bots and
-              reading the meta on-chain.
+              Five tracks that cover what you need to ship in Web3—from your
+              first wallet to running bots and reading on-chain data without
+              drowning in charts.
             </p>
           </div>
 
@@ -322,7 +321,7 @@ export default function AcademyPage() {
         </div>
       </section>
 
-      {/* Learning Journey */}
+      {/* Steps */}
       <section className="relative border-t border-slate-800/70 px-4 py-16 md:px-6 md:py-20 lg:px-8">
         <div
           aria-hidden="true"
@@ -331,15 +330,15 @@ export default function AcademyPage() {
         <div className="mx-auto max-w-5xl space-y-10">
           <div className="space-y-3 text-center md:text-left">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200/90">
-              Your Learning Journey
+              How it goes
             </p>
             <h2 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
               From zero to shipping First Son.
             </h2>
             <p className="max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
-              We guide you step by step so you never have to “figure it all out
-              alone” — every stage is designed to keep you shipping and
-              learning in public.
+              We lay out one step after another so you’re not guessing alone—each
+              stage keeps you shipping and posting progress where others can
+              help.
             </p>
           </div>
 
@@ -382,8 +381,9 @@ export default function AcademyPage() {
             Ready to become a First Son?
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-slate-200 sm:text-base">
-            The earlier you join, the closer you are to the core. Beta spots are
-            intentionally capped so we can give real support, not just videos.
+            Early members get more direct access while we’re still small. Beta
+            spots stay limited so we can answer questions—not just drop
+            recordings.
           </p>
 
           <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-center">
@@ -408,12 +408,4 @@ export default function AcademyPage() {
     </main>
   );
 }
-
-/**
- * Key additions:
- * - AcademyPage hero with gradient heading, supporting copy, and dual CTAs to the waitlist and Discord.
- * - "Vibe Coding — How It Actually Works" section outlining the 4-step method plus a concrete prompt/example.
- * - "Phase 1: Foundation" course grid with detailed lucide-icon cards for each track beginners can take.
- * - "Your Learning Journey" step flow and a final CTA section encouraging users to join the beta or enter Discord.
- */
 

@@ -52,7 +52,7 @@ const courses: Record<CourseSlug, CourseDetail> = {
       {
         week: "Week 1",
         topics: [
-          "Intro to Vibe Coding and how AI actually fits into your workflow.",
+          "Intro to Vibe Coding and where AI fits in day-to-day work.",
           "Best prompts and patterns for Claude, Cursor, and friends.",
           "First AI-generated UI component and small refactors with AI."
         ]
@@ -87,7 +87,7 @@ const courses: Record<CourseSlug, CourseDetail> = {
     slug: "ai-automation-web3",
     title: "AI Automation in Web3",
     description:
-      "Use AI to design and build automations that watch wallets, post content, trigger alerts, and help you run on-chain systems while you sleep.",
+      "Use AI to sketch and build automations that watch wallets, post content, fire alerts, and keep simple on-chain tasks running overnight.",
     duration: "5–7 weeks · Automation track",
     icon: <Bot className="h-6 w-6 text-[#60A5FA]" aria-hidden="true" />,
     ships: [
@@ -99,7 +99,7 @@ const courses: Record<CourseSlug, CourseDetail> = {
       {
         week: "Week 1",
         topics: [
-          "Automation basics and mental models for bots and agents.",
+          "Automation basics: how to think about bots, scripts, and scheduled jobs.",
           "Prompting AI to scaffold scripts and schedulers.",
           "Ship: Simple script that reacts to a single on-chain event."
         ]
@@ -134,7 +134,7 @@ const courses: Record<CourseSlug, CourseDetail> = {
     slug: "community-management-web3",
     title: "Community Management for Web3",
     description:
-      "Learn the systems behind thriving Web3 communities — from Discord architecture and events to bots, rewards, and contributor funnels.",
+      "Learn what keeps Web3 communities alive—Discord layout, events, bots, rewards, and paths from lurker to contributor.",
     duration: "4–6 weeks · Ops & growth",
     icon: <Users className="h-6 w-6 text-[#60A5FA]" aria-hidden="true" />,
     ships: [
@@ -177,7 +177,7 @@ const courses: Record<CourseSlug, CourseDetail> = {
     duration: "3–5 weeks · Essential",
     icon: <ShieldCheck className="h-6 w-6 text-[#60A5FA]" aria-hidden="true" />,
     ships: [
-      "Multi-wallet setup tailored to how you actually use crypto.",
+      "Multi-wallet setup tailored to how you really use crypto.",
       "Checklist and runbook for every new mint, dApp, or bridge.",
       "Small AI-assisted tool that reviews or annotates transactions."
     ],
@@ -193,7 +193,7 @@ const courses: Record<CourseSlug, CourseDetail> = {
       {
         week: "Weeks 2–3",
         topics: [
-          "How common scams and exploits actually work (without jump scares).",
+          "How common scams and exploits work (without scare tactics).",
           "Using AI to review transactions and contracts at a high level.",
           "Ship: Personal safety checklist you run before new interactions."
         ]
@@ -203,7 +203,7 @@ const courses: Record<CourseSlug, CourseDetail> = {
         topics: [
           "Security habits for long-term builders and contributors.",
           "Designing “panic buttons” and recovery plans.",
-          "Ship: Tiny helper (script or checklist) you’ll actually keep using."
+          "Ship: Tiny helper (script or checklist) you’ll keep using."
         ]
       }
     ]
@@ -212,7 +212,7 @@ const courses: Record<CourseSlug, CourseDetail> = {
     slug: "on-chain-basics-analytics",
     title: "On-Chain Basics & Analytics",
     description:
-      "Read the chain like a story. Learn how blocks, transactions, gas, and analytics tools fit together so you can follow the money and the meta.",
+      "Learn how blocks, transactions, gas, and analytics tools fit together so you can follow wallets and protocols without drowning in jargon.",
     duration: "4–6 weeks · Core",
     icon: <LineChart className="h-6 w-6 text-[#60A5FA]" aria-hidden="true" />,
     ships: [
@@ -381,8 +381,9 @@ export default function CoursePage({ params }: PageParams) {
               Real projects, not just theory.
             </h2>
             <p className="text-sm leading-relaxed text-slate-200 sm:text-base">
-              You won&apos;t just collect lecture notes — you&apos;ll leave
-              with links, repos, and on-chain proof you can actually show off.
+              You won&apos;t just collect lecture notes—you&apos;ll leave with
+              links, repos, and on-chain proof you can show in a portfolio or
+              interview.
             </p>
           </div>
 
@@ -425,9 +426,9 @@ export default function CoursePage({ params }: PageParams) {
             Join the fam and start shipping.
           </h2>
           <p className="text-sm leading-relaxed text-slate-200 sm:text-base">
-            All enrollment runs through Discord so you&apos;re never learning
-            alone. Tap in, grab your role, and we&apos;ll guide you from first
-            prompt to first on-chain ship.
+            Enrollment runs through Discord so you&apos;re not learning alone.
+            Join, grab your role, and we&apos;ll walk you from first prompt to
+            first on-chain ship.
           </p>
 
           <Link
@@ -442,7 +443,7 @@ export default function CoursePage({ params }: PageParams) {
             )}
             aria-label="Join the First Sons Discord to enroll"
           >
-            <span>Join Discord to Enroll &amp; Start Shipping in the Fam</span>
+            <span>Join Discord to enroll</span>
             <Rocket className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
           </Link>
         </div>
@@ -450,11 +451,4 @@ export default function CoursePage({ params }: PageParams) {
     </main>
   );
 }
-
-/**
- * This dynamic course page:
- * - Uses a typed record of course metadata and modules mapped by slug.
- * - Pre-renders static paths via generateStaticParams and dynamic metadata from the course content.
- * - Follows the same gradient + glassmorphism visual language as the rest of First Sons.
- */
 

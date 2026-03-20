@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Waitlist Confirmed | First Sons",
   description:
-    "You’re on the First Sons waitlist. Join the Discord fam and follow us on X to start vibing with other builders while we prep Phase 1."
+    "You’re on the First Sons waitlist. Join Discord and follow on X for updates while we prep Phase 1."
 };
 
 const DISCORD_INVITE_URL = "https://discord.gg/VJj2ZHc46";
@@ -34,7 +34,8 @@ export default function WaitlistSuccessPage() {
           </h1>
 
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
-            You&apos;re officially on the list for the next Phase 1 cohort. Plug into the Discord jungle and follow us on X so you don&apos;t miss early drops and build-alongs.
+            You&apos;re on the list for the next Phase 1 cohort. Join Discord and
+            follow us on X so you don&apos;t miss early drops and build-alongs.
           </p>
         </section>
 
@@ -120,7 +121,7 @@ export default function WaitlistSuccessPage() {
             <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-900/40 p-4 text-xs leading-relaxed text-slate-300 sm:text-sm">
               <Rocket className="mt-0.5 h-4 w-4 text-[#60A5FA]" aria-hidden="true" />
               <p>
-                When your cohort slot unlocks, we&apos;ll email you with
+                When a spot opens for your cohort, we&apos;ll email you with
                 onboarding details. Staying active in Discord and on X helps you
                 catch extra drops, collabs, and early invites.
               </p>

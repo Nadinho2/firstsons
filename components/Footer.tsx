@@ -28,7 +28,7 @@ export function Footer() {
               <span className="text-sm font-semibold text-slate-200">First Sons</span>
             </div>
             <p className="text-[11px] leading-relaxed text-slate-500 max-w-xs">
-              Web3 academy for complete beginners. Learn by shipping with AI and the fam.
+              Web3 academy for complete beginners. Learn by shipping—tools and the Discord group help you get it done.
             </p>
             <div className="flex items-center gap-3">
               <a
