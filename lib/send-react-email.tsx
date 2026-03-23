@@ -8,6 +8,17 @@ import {
   isValidResendFromFormat,
 } from "@/lib/resend-config";
 
+/** Resend tags accept only ASCII letters, numbers, underscores, and dashes. */
+function toResendTagValue(input: string): string {
+  const asciiOnly = input.normalize("NFKD").replace(/[^\x00-\x7F]/g, "");
+  const slug = asciiOnly
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return (slug || "na").slice(0, 48);
+}
+
 /**
  * Future: store PDF receipts on Vercel Blob or Resend Attachments API
  * @example
@@ -89,7 +100,7 @@ export async function sendPremiumEnrollmentEmailReact(input: {
     ),
     tags: [
       { name: "template", value: "premium_enrollment" },
-      { name: "course", value: input.course.slice(0, 48) },
+      { name: "course", value: toResendTagValue(input.course) },
     ],
   });
 

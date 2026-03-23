@@ -2,6 +2,7 @@ import { createElement } from "react";
 import { render } from "@react-email/render";
 import { Resend } from "resend";
 import { getEmailLogoUrl } from "@/emails/brand";
+import WaitlistApprovalEmail from "@/emails/WaitlistApprovalEmail";
 import WaitlistConfirmationEmail from "@/emails/WaitlistConfirmationEmail";
 import {
   getResendApiKey,
@@ -18,6 +19,19 @@ export type WaitlistEmailPayload = {
   courseTitle?: string;
 };
 
+/** Cohort approval — schedule, Meet, WhatsApp only (no Discord / X). */
+export type WaitlistApprovalEmailPayload = {
+  email: string;
+  fullName?: string;
+  courseTitle: string;
+  /** e.g. "March 1 – April 15, 2026" */
+  classDates: string;
+  /** e.g. "Saturdays, 10:00 AM – 12:00 PM (WAT)" */
+  classTime: string;
+  googleMeetUrl: string;
+  whatsappGroupUrl: string;
+};
+
 /** For server-action logs (Vercel) — must match getFromAddress() logic. */
 export function waitlistEmailEnvStatus(): {
   hasResendKey: boolean;
@@ -27,6 +41,17 @@ export function waitlistEmailEnvStatus(): {
     hasResendKey: Boolean(getResendApiKey()),
     hasFrom: Boolean(getResendFromAddress())
   };
+}
+
+/** Resend tags accept only ASCII letters, numbers, underscores, and dashes. */
+function toResendTagValue(input: string): string {
+  const asciiOnly = input.normalize("NFKD").replace(/[^\x00-\x7F]/g, "");
+  const slug = asciiOnly
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return (slug || "na").slice(0, 48);
 }
 
 export async function sendWaitlistConfirmationEmail(
@@ -97,7 +122,7 @@ export async function sendWaitlistConfirmationEmail(
     tags: [
       { name: "source", value: "waitlist" },
       ...(payload.courseSlug
-        ? [{ name: "course", value: payload.courseSlug }]
+        ? [{ name: "course", value: toResendTagValue(payload.courseSlug) }]
         : [])
     ]
   });
@@ -116,6 +141,92 @@ export async function sendWaitlistConfirmationEmail(
 
   console.log("[waitlist] Confirmation email sent", {
     to: email,
+    resendEmailId: data?.id
+  });
+}
+
+/**
+ * Send cohort approval email (class dates, time, Google Meet, repeated WhatsApp CTAs).
+ * Does not include Discord or X — use for students who already received waitlist confirmation.
+ */
+export async function sendWaitlistApprovalEmail(
+  payload: WaitlistApprovalEmailPayload
+): Promise<void> {
+  const apiKey = getResendApiKey();
+  const fromAddress = getResendFromAddress();
+  const config =
+    apiKey && fromAddress ? { apiKey, fromAddress } : null;
+
+  if (!config) {
+    const missing: string[] = [];
+    if (!apiKey) missing.push("RESEND_API_KEY");
+    if (!fromAddress) {
+      missing.push(
+        "WAITLIST_FROM_EMAIL (or RESEND_FROM / RESEND_FROM_EMAIL)"
+      );
+    }
+    const hint = `Missing: ${missing.join(", ")}.`;
+    console.warn("[waitlist-approval] Email NOT sent —", hint, {
+      to: payload.email
+    });
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(`Approval email not configured. ${hint}`);
+    }
+    return;
+  }
+
+  const displayName = payload.fullName?.trim() || "there";
+  const courseTitle = payload.courseTitle.trim();
+
+  const emailNode = createElement(WaitlistApprovalEmail, {
+    name: displayName,
+    courseTitle,
+    classDates: payload.classDates.trim(),
+    classTime: payload.classTime.trim(),
+    googleMeetUrl: payload.googleMeetUrl.trim(),
+    whatsappGroupUrl: payload.whatsappGroupUrl.trim(),
+    logoUrl: getEmailLogoUrl(),
+  });
+
+  const html = await render(emailNode);
+  const text = await render(emailNode, { plainText: true });
+
+  if (!isValidResendFromFormat(config.fromAddress)) {
+    throw new Error(
+      "Invalid WAITLIST_FROM_EMAIL / RESEND_FROM: use only ASCII."
+    );
+  }
+
+  const resend = new Resend(config.apiKey);
+
+  const subject = `You're in — ${courseTitle} · First Sons`;
+
+  const { data, error } = await resend.emails.send({
+    from: config.fromAddress,
+    to: [payload.email],
+    subject,
+    text,
+    html,
+    tags: [
+      { name: "source", value: "waitlist_approval" },
+      { name: "course", value: toResendTagValue(courseTitle) }
+    ]
+  });
+
+  if (error) {
+    console.error("[waitlist-approval] Resend API error:", error);
+    const msg =
+      typeof error === "object" &&
+      error !== null &&
+      "message" in error &&
+      typeof (error as { message: unknown }).message === "string"
+        ? (error as { message: string }).message
+        : JSON.stringify(error);
+    throw new Error(`Resend: ${msg}`);
+  }
+
+  console.log("[waitlist-approval] Email sent", {
+    to: payload.email,
     resendEmailId: data?.id
   });
 }
