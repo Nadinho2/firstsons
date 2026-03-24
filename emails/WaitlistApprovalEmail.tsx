@@ -16,6 +16,7 @@ import { EmailBrandLogoRow } from "./EmailBrandLogo";
 /** WhatsApp brand green — recognizable for chat CTAs */
 const WHATSAPP_GREEN = "#25D366";
 const WHATSAPP_GREEN_DARK = "#128C7E";
+const DEFAULT_X_URL = "https://x.com/nadinhocrypto";
 
 export type WaitlistApprovalEmailProps = {
   /** Greeting name */
@@ -30,13 +31,15 @@ export type WaitlistApprovalEmailProps = {
   googleMeetUrl: string;
   /** WhatsApp group invite link */
   whatsappGroupUrl: string;
+  /** X profile link */
+  xUrl?: string;
   /** Optional hosted logo — see EMAIL_LOGO_URL */
   logoUrl?: string;
 };
 
 /**
- * Cohort approval — schedule, Google Meet, repeated WhatsApp CTAs.
- * Intentionally no Discord or X (separate from waitlist confirmation).
+ * Cohort approval — schedule, Google Meet, lighter WhatsApp repetition.
+ * Intentionally no Discord.
  */
 export default function WaitlistApprovalEmail({
   name,
@@ -45,6 +48,7 @@ export default function WaitlistApprovalEmail({
   classTime,
   googleMeetUrl,
   whatsappGroupUrl,
+  xUrl = DEFAULT_X_URL,
   logoUrl,
 }: WaitlistApprovalEmailProps) {
   const greeting = name?.trim() ? name.trim() : "there";
@@ -115,13 +119,6 @@ export default function WaitlistApprovalEmail({
                 with the group).
               </Text>
 
-              {/* CTA 2 */}
-              <Section style={styles.btnWrap}>
-                <Button href={whatsappGroupUrl} style={styles.btnWhatsApp}>
-                  Join WhatsApp — cohort updates &amp; reminders →
-                </Button>
-              </Section>
-
               <Section style={styles.whatsappHighlight}>
                 <Text style={styles.whatsappHighlightTitle}>
                   Important: join the WhatsApp group
@@ -131,11 +128,12 @@ export default function WaitlistApprovalEmail({
                   group — that&apos;s where we post schedule changes, prep
                   materials, and reminders.
                 </Text>
-                <Section style={styles.btnWrapTight}>
-                  <Button href={whatsappGroupUrl} style={styles.btnWhatsApp}>
-                    Tap to join WhatsApp →
-                  </Button>
-                </Section>
+                <Text style={styles.whatsappHint}>
+                  Join once here:{" "}
+                  <Link href={whatsappGroupUrl} style={styles.inlineLink}>
+                    open WhatsApp invite
+                  </Link>
+                </Text>
               </Section>
 
               <Text style={styles.p}>
@@ -143,10 +141,9 @@ export default function WaitlistApprovalEmail({
                 we&apos;ll help.
               </Text>
 
-              {/* CTA 4 — final nudge */}
               <Section style={styles.btnWrap}>
-                <Button href={whatsappGroupUrl} style={styles.btnWhatsApp}>
-                  Join the WhatsApp group (same link) →
+                <Button href={xUrl} style={styles.btnX}>
+                  Follow updates on X @nadinhocrypto →
                 </Button>
               </Section>
 
@@ -310,6 +307,26 @@ const styles = {
     fontSize: "15px",
     lineHeight: 1.55,
     color: brand.textBody,
+  },
+  whatsappHint: {
+    margin: 0,
+    fontSize: "14px",
+    color: brand.textBody,
+  },
+  btnX: {
+    display: "block",
+    width: "100%",
+    maxWidth: "320px",
+    margin: "0 auto",
+    backgroundColor: brand.background,
+    color: "#ffffff",
+    padding: "14px 24px",
+    fontSize: "15px",
+    fontWeight: 700,
+    textDecoration: "none",
+    borderRadius: "9999px",
+    textAlign: "center" as const,
+    lineHeight: "1.4",
   },
   signOff: {
     margin: "28px 0 0",

@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendWaitlistApprovalEmail } from "@/lib/email";
+import {
+  sendClassRecordingEmail,
+  sendNextClassTeaserEmail,
+  sendWaitlistApprovalEmail,
+} from "@/lib/email";
 import { isValidEmail } from "@/lib/resend-config";
 
 type Recipient = {
@@ -8,12 +12,18 @@ type Recipient = {
 };
 
 type ApprovalRequestBody = {
+  mode?: "approval" | "recording" | "teaser";
   recipients: Recipient[];
   courseTitle: string;
   classDates: string;
   classTime: string;
   googleMeetUrl: string;
   whatsappGroupUrl: string;
+  recordingUrl?: string;
+  classLabel?: string;
+  nextClassLabel?: string;
+  nextClassDateTime?: string;
+  teaserText?: string;
 };
 
 const MAX_RECIPIENTS = 1000;
@@ -103,19 +113,74 @@ export async function POST(request: NextRequest) {
   const classTime = sanitizeText(body.classTime);
   const googleMeetUrl = sanitizeText(body.googleMeetUrl);
   const whatsappGroupUrl = sanitizeText(body.whatsappGroupUrl);
+  const mode = body.mode ?? "approval";
+  const recordingUrl = sanitizeText(body.recordingUrl);
+  const classLabel = sanitizeText(body.classLabel);
+  const nextClassLabel = sanitizeText(body.nextClassLabel);
+  const nextClassDateTime = sanitizeText(body.nextClassDateTime);
+  const teaserText = sanitizeText(body.teaserText);
 
-  if (!courseTitle || !classDates || !classTime || !googleMeetUrl || !whatsappGroupUrl) {
+  if (!courseTitle || !whatsappGroupUrl) {
     return NextResponse.json(
-      { ok: false, error: "All class fields are required." },
+      { ok: false, error: "Course title and WhatsApp link are required." },
       { status: 400 }
     );
   }
 
-  if (!isValidHttpUrl(googleMeetUrl) || !isValidHttpUrl(whatsappGroupUrl)) {
+  if (!isValidHttpUrl(whatsappGroupUrl)) {
     return NextResponse.json(
-      { ok: false, error: "Google Meet and WhatsApp links must be valid URLs." },
+      { ok: false, error: "WhatsApp link must be a valid URL." },
       { status: 400 }
     );
+  }
+
+  if (mode === "approval") {
+    if (!classDates || !classTime || !googleMeetUrl) {
+      return NextResponse.json(
+        { ok: false, error: "Dates, time, and Google Meet are required for approval mode." },
+        { status: 400 }
+      );
+    }
+    if (!isValidHttpUrl(googleMeetUrl)) {
+      return NextResponse.json(
+        { ok: false, error: "Google Meet link must be a valid URL." },
+        { status: 400 }
+      );
+    }
+  }
+
+  if (mode === "recording") {
+    if (!classLabel || !recordingUrl) {
+      return NextResponse.json(
+        { ok: false, error: "Class label and recording link are required for recording mode." },
+        { status: 400 }
+      );
+    }
+    if (!isValidHttpUrl(recordingUrl)) {
+      return NextResponse.json(
+        { ok: false, error: "Recording link must be a valid URL." },
+        { status: 400 }
+      );
+    }
+  }
+
+  if (mode === "teaser") {
+    if (!nextClassLabel || !nextClassDateTime || !googleMeetUrl || !teaserText) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error:
+            "Next class label, date/time, Meet link, and teaser text are required for teaser mode.",
+        },
+        { status: 400 }
+      );
+    }
+    if (!isValidHttpUrl(googleMeetUrl)) {
+      return NextResponse.json(
+        { ok: false, error: "Google Meet link must be a valid URL." },
+        { status: 400 }
+      );
+    }
   }
 
   const results: Array<{ email: string; ok: boolean; error?: string }> = [];
@@ -123,15 +188,37 @@ export async function POST(request: NextRequest) {
 
   for (const recipient of dedupedRecipients) {
     try {
-      await sendWaitlistApprovalEmail({
-        email: recipient.email,
-        fullName: recipient.fullName,
-        courseTitle,
-        classDates,
-        classTime,
-        googleMeetUrl,
-        whatsappGroupUrl,
-      });
+      if (mode === "recording") {
+        await sendClassRecordingEmail({
+          email: recipient.email,
+          fullName: recipient.fullName,
+          courseTitle,
+          classLabel,
+          recordingUrl,
+          whatsappGroupUrl,
+        });
+      } else if (mode === "teaser") {
+        await sendNextClassTeaserEmail({
+          email: recipient.email,
+          fullName: recipient.fullName,
+          courseTitle,
+          nextClassLabel,
+          nextClassDateTime,
+          googleMeetUrl,
+          whatsappGroupUrl,
+          teaserText,
+        });
+      } else {
+        await sendWaitlistApprovalEmail({
+          email: recipient.email,
+          fullName: recipient.fullName,
+          courseTitle,
+          classDates,
+          classTime,
+          googleMeetUrl,
+          whatsappGroupUrl,
+        });
+      }
       sent += 1;
       results.push({ email: recipient.email, ok: true });
     } catch (error) {

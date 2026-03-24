@@ -15,6 +15,7 @@ import { CourseWaitlistSection } from "@/components/CourseWaitlistSection";
 const DISCORD_INVITE_URL = "https://discord.gg/VJj2ZHc46";
 
 type CourseSlug =
+  | "vibe-coding-bootcamp"
   | "vibe-coding"
   | "ai-automation-web3"
   | "community-management-web3"
@@ -24,6 +25,12 @@ type CourseSlug =
 type Module = {
   week: string;
   topics: string[];
+  duration?: string;
+  intro?: string;
+  liveBuild?: string;
+  win?: string;
+  homework?: string;
+  teaser?: string;
 };
 
 type CourseDetail = {
@@ -38,6 +45,100 @@ type CourseDetail = {
 };
 
 const courses: Record<CourseSlug, CourseDetail> = {
+  "vibe-coding-bootcamp": {
+    slug: "vibe-coding-bootcamp",
+    title: "Vibe Coding Bootcamp",
+    description:
+      "Vibe Coding Kickoff: a free intro series for complete beginners to ship first Web3 projects with AI, no gatekeeping.",
+    duration: "6 live sessions · Free intro series",
+    icon: <Code2 className="h-6 w-6 text-[#60A5FA]" aria-hidden="true" />,
+    ships: [
+      "Your first vibe functions and logic mini-builds.",
+      "A personal Vibe Card website with styling and interactivity.",
+      "A deployed crypto-flavored dashboard on Vercel."
+    ],
+    modules: [
+      {
+        week: "Session 1 - Vibe Coding 101: Terms, Definitions & Functions Magic",
+        duration: "60-75 min (live/recorded)",
+        intro:
+          "What Vibe Coding is and how beginners use plain English + AI to start shipping immediately.",
+        topics: [
+          "What is Vibe Coding?",
+          "Variables, functions, parameters, return, console.log",
+          "Common beginner bugs and debugging flow"
+        ],
+        liveBuild: "Vibe score calculator + greet function in Cursor/Grok",
+        win: "Your first 2-3 personal functions",
+        homework: "Daily vibe checker function + screenshot share",
+        teaser: "Next: turn words into beautiful websites!",
+      },
+      {
+        week: "Session 2 - Vibe Websites: HTML & CSS with AI",
+        topics: [
+          "HTML structure and clean page layout",
+          "CSS styling basics: tags, classes, selectors",
+          "Responsive layouts (flex/grid with AI prompts)"
+        ],
+        liveBuild:
+          'Personal "Vibe Card" profile page (bio, badges, socials, glow buttons)',
+        win: "Your first live personal site",
+        homework: "Customize your page + create a crypto vibe alert card prompt",
+        teaser: "Next: make pages do real logic and reactions.",
+      },
+      {
+        week: "Session 3 - Vibe Logic: Variables, Conditionals, Loops & JS Basics",
+        topics: [
+          "Variables and data types in JavaScript",
+          "if/else decisions and loop basics (for/while)",
+          "Wiring logic into your Vibe Card"
+        ],
+        liveBuild:
+          "Interactive vibe checker (input -> score + message) + dynamic section upgrade",
+        win: "A page that reacts to users",
+        homework: "Crypto price mood checker (fake data)",
+        teaser: "Next: buttons, events, and DOM magic.",
+      },
+      {
+        week: "Session 4 - Make It Interactive: Events, Buttons & DOM Magic",
+        topics: [
+          "Event listeners (click/input)",
+          "DOM updates and simple state handling",
+          "Practical interaction patterns for beginner apps"
+        ],
+        liveBuild:
+          "Upgrade Vibe Card: boost vibe button (quote + animation), counter, and form",
+        win: "A fully interactive mini-app",
+        homework: 'Add a "connect wallet" placeholder (Web3 intro)',
+        teaser: "Next: build your first full vibe app end-to-end.",
+      },
+      {
+        week: "Session 5 - Build Your First Full Vibe App: Crypto Price Tracker Dashboard",
+        topics: [
+          "Combining HTML/CSS/JS into one complete app",
+          "Events and dynamic updates in one workflow",
+          "API-fetch tease (e.g., CoinGecko) and vibe alerts"
+        ],
+        liveBuild: "Crypto dashboard with price display + vibe alerts",
+        win: "A shareable Web3-flavored deployed app",
+        homework: "Personalize and add one custom feature (e.g., favorite coin)",
+        teaser: "Next: launch prep, debugging, and premium path reveal.",
+      },
+      {
+        week: "Session 6 - Share, Debug, Launch & Premium Path Reveal",
+        topics: [
+          "Debugging with AI and clean prompt-based fixes",
+          "Git basics (commit/push) and Vercel deploy flow",
+          "Portfolio tips + student showcases"
+        ],
+        liveBuild: "Live polish + final launch walkthrough",
+        win: "Confidence to share your work and keep shipping",
+        homework: "Prepare your portfolio links for Phase 1 selection",
+        teaser:
+          "Upgrade path: on-chain builds, bots, community ops, private Discord, and client roadmap.",
+      }
+    ]
+  },
   "vibe-coding": {
     slug: "vibe-coding",
     title: "Vibe Coding",
@@ -327,7 +428,9 @@ export default function CoursePage({ params }: PageParams) {
                   Curriculum Breakdown
                 </p>
                 <h2 className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
-                  Week-by-week, built to ship.
+                  {course.slug === "vibe-coding-bootcamp"
+                    ? "Session-by-session, built to ship."
+                    : "Week-by-week, built to ship."}
                 </h2>
                 <p className="text-sm leading-relaxed text-slate-200 sm:text-base">
                   Each module is a mini-arc: learn just enough, ship something
@@ -336,28 +439,93 @@ export default function CoursePage({ params }: PageParams) {
               </div>
 
               <div className="space-y-4">
-                {course.modules.map((module) => (
-                  <article
-                    key={module.week}
-                    className={cn(
-                      "rounded-2xl border border-white/10 bg-white/5 p-5",
-                      "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
-                      "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
-                    )}
-                  >
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
-                      {module.week}
-                    </p>
-                    <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-slate-200 sm:text-sm">
-                      {module.topics.map((topic) => (
-                        <li key={topic} className="flex gap-2">
-                          <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#60A5FA]" />
-                          <span>{topic}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </article>
-                ))}
+                {course.modules.map((module) =>
+                  course.slug === "vibe-coding-bootcamp" ? (
+                    <details
+                      key={module.week}
+                      className={cn(
+                        "group rounded-2xl border border-white/10 bg-white/5 p-5",
+                        "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
+                        "open:border-[#60A5FA]/40 open:bg-white/10"
+                      )}
+                    >
+                      <summary className="cursor-pointer list-none pr-8 text-sm font-semibold text-slate-50 marker:content-['']">
+                        <span className="bg-gradient-to-r from-[#1E40AF] via-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">
+                          {module.week}
+                        </span>
+                        {module.duration ? (
+                          <span className="ml-2 text-xs font-medium text-slate-400">
+                            ({module.duration})
+                          </span>
+                        ) : null}
+                      </summary>
+                      {module.intro ? (
+                        <p className="mt-3 text-xs leading-relaxed text-slate-200 sm:text-sm">
+                          {module.intro}
+                        </p>
+                      ) : null}
+                      <ul className="mt-3 space-y-1.5 text-xs leading-relaxed text-slate-200 sm:text-sm">
+                        {module.topics.map((topic) => (
+                          <li key={topic} className="flex gap-2">
+                            <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#60A5FA]" />
+                            <span>{topic}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      {module.liveBuild ? (
+                        <p className="mt-3 text-xs text-slate-200 sm:text-sm">
+                          <span className="font-semibold text-[#60A5FA]">
+                            Live build:
+                          </span>{" "}
+                          {module.liveBuild}
+                        </p>
+                      ) : null}
+                      {module.win ? (
+                        <p className="mt-2 text-xs text-slate-200 sm:text-sm">
+                          <span className="font-semibold text-[#60A5FA]">
+                            Win:
+                          </span>{" "}
+                          {module.win}
+                        </p>
+                      ) : null}
+                      {module.homework ? (
+                        <p className="mt-2 text-xs text-slate-200 sm:text-sm">
+                          <span className="font-semibold text-[#60A5FA]">
+                            Homework:
+                          </span>{" "}
+                          {module.homework}
+                        </p>
+                      ) : null}
+                      {module.teaser ? (
+                        <p className="mt-2 text-xs text-blue-200/90 sm:text-sm">
+                          <span className="font-semibold">Teaser:</span>{" "}
+                          {module.teaser}
+                        </p>
+                      ) : null}
+                    </details>
+                  ) : (
+                    <article
+                      key={module.week}
+                      className={cn(
+                        "rounded-2xl border border-white/10 bg-white/5 p-5",
+                        "shadow-xl shadow-blue-500/10 backdrop-blur-xl transition-all duration-300",
+                        "hover:border-[#60A5FA]/30 hover:bg-white/10 hover:shadow-blue-500/20"
+                      )}
+                    >
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#60A5FA]">
+                        {module.week}
+                      </p>
+                      <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-slate-200 sm:text-sm">
+                        {module.topics.map((topic) => (
+                          <li key={topic} className="flex gap-2">
+                            <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#60A5FA]" />
+                            <span>{topic}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </article>
+                  )
+                )}
               </div>
             </>
           )}

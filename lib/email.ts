@@ -1,7 +1,9 @@
 import { createElement } from "react";
 import { render } from "@react-email/render";
 import { Resend } from "resend";
+import ClassRecordingEmail from "@/emails/ClassRecordingEmail";
 import { getEmailLogoUrl } from "@/emails/brand";
+import NextClassTeaserEmail from "@/emails/NextClassTeaserEmail";
 import WaitlistApprovalEmail from "@/emails/WaitlistApprovalEmail";
 import WaitlistConfirmationEmail from "@/emails/WaitlistConfirmationEmail";
 import {
@@ -30,6 +32,29 @@ export type WaitlistApprovalEmailPayload = {
   classTime: string;
   googleMeetUrl: string;
   whatsappGroupUrl: string;
+  xUrl?: string;
+};
+
+export type ClassRecordingEmailPayload = {
+  email: string;
+  fullName?: string;
+  courseTitle: string;
+  classLabel: string;
+  recordingUrl: string;
+  whatsappGroupUrl: string;
+  xUrl?: string;
+};
+
+export type NextClassTeaserEmailPayload = {
+  email: string;
+  fullName?: string;
+  courseTitle: string;
+  nextClassLabel: string;
+  nextClassDateTime: string;
+  googleMeetUrl: string;
+  whatsappGroupUrl: string;
+  teaserText: string;
+  xUrl?: string;
 };
 
 /** For server-action logs (Vercel) — must match getFromAddress() logic. */
@@ -177,6 +202,7 @@ export async function sendWaitlistApprovalEmail(
 
   const displayName = payload.fullName?.trim() || "there";
   const courseTitle = payload.courseTitle.trim();
+  const xUrl = payload.xUrl?.trim() || "https://x.com/nadinhocrypto";
 
   const emailNode = createElement(WaitlistApprovalEmail, {
     name: displayName,
@@ -185,6 +211,7 @@ export async function sendWaitlistApprovalEmail(
     classTime: payload.classTime.trim(),
     googleMeetUrl: payload.googleMeetUrl.trim(),
     whatsappGroupUrl: payload.whatsappGroupUrl.trim(),
+    xUrl,
     logoUrl: getEmailLogoUrl(),
   });
 
@@ -229,4 +256,86 @@ export async function sendWaitlistApprovalEmail(
     to: payload.email,
     resendEmailId: data?.id
   });
+}
+
+export async function sendClassRecordingEmail(
+  payload: ClassRecordingEmailPayload
+): Promise<void> {
+  const apiKey = getResendApiKey();
+  const fromAddress = getResendFromAddress();
+  const config = apiKey && fromAddress ? { apiKey, fromAddress } : null;
+  if (!config) throw new Error("Email config missing.");
+
+  const courseTitle = payload.courseTitle.trim();
+  const classLabel = payload.classLabel.trim();
+  const xUrl = payload.xUrl?.trim() || "https://x.com/nadinhocrypto";
+
+  const emailNode = createElement(ClassRecordingEmail, {
+    name: payload.fullName?.trim() || "there",
+    courseTitle,
+    classLabel,
+    recordingUrl: payload.recordingUrl.trim(),
+    whatsappGroupUrl: payload.whatsappGroupUrl.trim(),
+    xUrl,
+    logoUrl: getEmailLogoUrl(),
+  });
+
+  const html = await render(emailNode);
+  const text = await render(emailNode, { plainText: true });
+  const resend = new Resend(config.apiKey);
+
+  const { error } = await resend.emails.send({
+    from: config.fromAddress,
+    to: [payload.email],
+    subject: `${classLabel} recording — ${courseTitle}`,
+    text,
+    html,
+    tags: [
+      { name: "source", value: "class_recording" },
+      { name: "course", value: toResendTagValue(courseTitle) }
+    ]
+  });
+  if (error) throw new Error(`Resend: ${JSON.stringify(error)}`);
+}
+
+export async function sendNextClassTeaserEmail(
+  payload: NextClassTeaserEmailPayload
+): Promise<void> {
+  const apiKey = getResendApiKey();
+  const fromAddress = getResendFromAddress();
+  const config = apiKey && fromAddress ? { apiKey, fromAddress } : null;
+  if (!config) throw new Error("Email config missing.");
+
+  const courseTitle = payload.courseTitle.trim();
+  const nextClassLabel = payload.nextClassLabel.trim();
+  const xUrl = payload.xUrl?.trim() || "https://x.com/nadinhocrypto";
+
+  const emailNode = createElement(NextClassTeaserEmail, {
+    name: payload.fullName?.trim() || "there",
+    courseTitle,
+    nextClassLabel,
+    nextClassDateTime: payload.nextClassDateTime.trim(),
+    googleMeetUrl: payload.googleMeetUrl.trim(),
+    whatsappGroupUrl: payload.whatsappGroupUrl.trim(),
+    teaserText: payload.teaserText.trim(),
+    xUrl,
+    logoUrl: getEmailLogoUrl(),
+  });
+
+  const html = await render(emailNode);
+  const text = await render(emailNode, { plainText: true });
+  const resend = new Resend(config.apiKey);
+
+  const { error } = await resend.emails.send({
+    from: config.fromAddress,
+    to: [payload.email],
+    subject: `${nextClassLabel} is next — ${courseTitle}`,
+    text,
+    html,
+    tags: [
+      { name: "source", value: "next_class_teaser" },
+      { name: "course", value: toResendTagValue(courseTitle) }
+    ]
+  });
+  if (error) throw new Error(`Resend: ${JSON.stringify(error)}`);
 }

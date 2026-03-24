@@ -23,6 +23,8 @@ type ApiResponse = {
   results?: SendResult[];
 };
 
+type MailMode = "approval" | "recording" | "teaser";
+
 const recipientHelpText =
   "One per line. Use `email` or `email, Name` format.";
 
@@ -155,12 +157,18 @@ function extractVibeCodingRecipientsFromCsv(csvRaw: string): Recipient[] {
 }
 
 export function AdminApprovalsDashboard() {
+  const [mode, setMode] = useState<MailMode>("approval");
   const [adminToken, setAdminToken] = useState("");
   const [courseTitle, setCourseTitle] = useState("");
   const [classDates, setClassDates] = useState("");
   const [classTime, setClassTime] = useState("");
   const [googleMeetUrl, setGoogleMeetUrl] = useState("");
   const [whatsappGroupUrl, setWhatsappGroupUrl] = useState("");
+  const [classLabel, setClassLabel] = useState("");
+  const [recordingUrl, setRecordingUrl] = useState("");
+  const [nextClassLabel, setNextClassLabel] = useState("");
+  const [nextClassDateTime, setNextClassDateTime] = useState("");
+  const [teaserText, setTeaserText] = useState("");
   const [recipientsRaw, setRecipientsRaw] = useState("");
   const [csvRaw, setCsvRaw] = useState("");
   const [csvInfo, setCsvInfo] = useState<string | null>(null);
@@ -185,12 +193,18 @@ export function AdminApprovalsDashboard() {
           Authorization: `Bearer ${adminToken.trim()}`,
         },
         body: JSON.stringify({
+          mode,
           recipients: parsedRecipients,
           courseTitle,
           classDates,
           classTime,
           googleMeetUrl,
           whatsappGroupUrl,
+          classLabel,
+          recordingUrl,
+          nextClassLabel,
+          nextClassDateTime,
+          teaserText,
         }),
       });
 
@@ -277,6 +291,21 @@ export function AdminApprovalsDashboard() {
 
         <div>
           <label className="mb-1 block text-xs font-medium text-slate-300">
+            Email type
+          </label>
+          <select
+            value={mode}
+            onChange={(e) => setMode(e.target.value as MailMode)}
+            className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
+          >
+            <option value="approval">Approval mail (class access)</option>
+            <option value="recording">Recording mail (past class video)</option>
+            <option value="teaser">Teaser mail (next class hype)</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="mb-1 block text-xs font-medium text-slate-300">
             Admin token
           </label>
           <input
@@ -305,48 +334,144 @@ export function AdminApprovalsDashboard() {
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-300">
-              Class dates
-            </label>
-            <input
-              type="text"
-              value={classDates}
-              onChange={(e) => setClassDates(e.target.value)}
-              required
-              className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
-              placeholder="March 15 - May 10, 2026"
-            />
+            {mode === "recording" ? (
+              <>
+                <label className="mb-1 block text-xs font-medium text-slate-300">
+                  Class label
+                </label>
+                <input
+                  type="text"
+                  value={classLabel}
+                  onChange={(e) => setClassLabel(e.target.value)}
+                  required
+                  className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
+                  placeholder="Day 1 - Vibe Coding 101"
+                />
+              </>
+            ) : mode === "teaser" ? (
+              <>
+                <label className="mb-1 block text-xs font-medium text-slate-300">
+                  Next class label
+                </label>
+                <input
+                  type="text"
+                  value={nextClassLabel}
+                  onChange={(e) => setNextClassLabel(e.target.value)}
+                  required
+                  className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
+                  placeholder="Day 2 - Vibe Websites"
+                />
+              </>
+            ) : (
+              <>
+                <label className="mb-1 block text-xs font-medium text-slate-300">
+                  Class dates
+                </label>
+                <input
+                  type="text"
+                  value={classDates}
+                  onChange={(e) => setClassDates(e.target.value)}
+                  required
+                  className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
+                  placeholder="March 15 - May 10, 2026"
+                />
+              </>
+            )}
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label className="mb-1 block text-xs font-medium text-slate-300">
-              Class time
-            </label>
-            <input
-              type="text"
-              value={classTime}
-              onChange={(e) => setClassTime(e.target.value)}
-              required
-              className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
-              placeholder="Saturdays, 10:00 AM - 12:00 PM (WAT)"
-            />
+        {mode === "approval" ? (
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-1 block text-xs font-medium text-slate-300">
+                Class time
+              </label>
+              <input
+                type="text"
+                value={classTime}
+                onChange={(e) => setClassTime(e.target.value)}
+                required
+                className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
+                placeholder="Saturdays, 10:00 AM - 12:00 PM (WAT)"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-xs font-medium text-slate-300">
+                Google Meet link
+              </label>
+              <input
+                type="url"
+                value={googleMeetUrl}
+                onChange={(e) => setGoogleMeetUrl(e.target.value)}
+                required
+                className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
+                placeholder="https://meet.google.com/xxx-yyyy-zzz"
+              />
+            </div>
           </div>
+        ) : null}
+
+        {mode === "recording" ? (
           <div>
             <label className="mb-1 block text-xs font-medium text-slate-300">
-              Google Meet link
+              Recording link (Google Meet recording)
             </label>
             <input
               type="url"
-              value={googleMeetUrl}
-              onChange={(e) => setGoogleMeetUrl(e.target.value)}
+              value={recordingUrl}
+              onChange={(e) => setRecordingUrl(e.target.value)}
               required
               className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
-              placeholder="https://meet.google.com/xxx-yyyy-zzz"
+              placeholder="https://drive.google.com/..."
             />
           </div>
-        </div>
+        ) : null}
+
+        {mode === "teaser" ? (
+          <>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-300">
+                  Next class date/time
+                </label>
+                <input
+                  type="text"
+                  value={nextClassDateTime}
+                  onChange={(e) => setNextClassDateTime(e.target.value)}
+                  required
+                  className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
+                  placeholder="Tuesday, 7:00 PM WAT"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-300">
+                  Google Meet link
+                </label>
+                <input
+                  type="url"
+                  value={googleMeetUrl}
+                  onChange={(e) => setGoogleMeetUrl(e.target.value)}
+                  required
+                  className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
+                  placeholder="https://meet.google.com/xxx-yyyy-zzz"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="mb-1 block text-xs font-medium text-slate-300">
+                Teaser / hype text
+              </label>
+              <textarea
+                value={teaserText}
+                onChange={(e) => setTeaserText(e.target.value)}
+                required
+                rows={3}
+                className="w-full rounded-xl border border-slate-600/60 bg-slate-950/50 px-3 py-2 text-sm text-slate-100"
+                placeholder="Tomorrow we build interactive vibe checkers with events and DOM magic."
+              />
+            </div>
+          </>
+        ) : null}
 
         <div>
           <label className="mb-1 block text-xs font-medium text-slate-300">
@@ -432,10 +557,10 @@ export function AdminApprovalsDashboard() {
           {isSending ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
-              Sending approvals...
+              Sending emails...
             </>
           ) : (
-            "Send approval emails"
+            "Send email campaign"
           )}
         </button>
       </form>

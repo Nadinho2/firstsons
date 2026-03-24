@@ -31,6 +31,19 @@ type CourseCard = {
 
 const courseCards: CourseCard[] = [
   {
+    slug: "vibe-coding-bootcamp",
+    title: "Vibe Coding Bootcamp",
+    weeks: "6 live sessions",
+    levelTag: "Free Intro",
+    icon: <Sparkles className="h-5 w-5 text-[#60A5FA]" aria-hidden="true" />,
+    bullets: [
+      "Zero-experience kickoff: build with plain English + AI.",
+      "Six high-energy sessions with mini-projects every class.",
+      "Learn Grok, Cursor, GitHub, Vercel, and PowerShell basics.",
+      "Ship portfolio-ready starter builds and prepare for Phase 1."
+    ]
+  },
+  {
     slug: "vibe-coding",
     title: "Vibe Coding",
     weeks: "6–8 weeks",

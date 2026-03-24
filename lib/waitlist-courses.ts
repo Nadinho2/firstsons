@@ -16,6 +16,19 @@ export type WaitlistCourse = {
 
 export const WAITLIST_COURSES: WaitlistCourse[] = [
   {
+    slug: "vibe-coding-bootcamp",
+    title: "Vibe Coding Bootcamp",
+    shortTitle: "Vibe Coding Bootcamp",
+    description:
+      "Free intro series with 6 live sessions to help complete beginners ship first Web3-flavored projects with AI tools.",
+    tags: [
+      { label: "Free" },
+      { label: "6 Sessions" },
+      { label: "Beginner" },
+      { label: "Kickoff" }
+    ]
+  },
+  {
     slug: "vibe-coding",
     title: "Vibe Coding",
     description:
