@@ -20,6 +20,8 @@ export function normalizeFromAddress(raw: string | undefined): string | undefine
 
 export function getResendFromAddress(): string | undefined {
   return (
+    normalizeFromAddress(process.env.NEWSLETTER_FROM_EMAIL) ||
+    normalizeFromAddress(process.env.EMAIL_FROM) ||
     normalizeFromAddress(process.env.WAITLIST_FROM_EMAIL) ||
     normalizeFromAddress(process.env.RESEND_FROM) ||
     normalizeFromAddress(process.env.RESEND_FROM_EMAIL) ||
